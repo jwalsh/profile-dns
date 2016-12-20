@@ -13,7 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "blockstack-auth": "^0.2.1"
+    "blockstack-auth": "^0.2.1",
+    "jsonwebtoken": "^7.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
