@@ -4,22 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "signer": "cd signer && http-server -h localhost -p 3000",
+    "signer": "./node_modules/.bin/http-server signer -p 3000",
     "resolver": "cd resolver && nodemon index.js localhost 3001",
-    "provider": "cd provider && http-server -h localhost -p 3002",
+    "provider": "./node_modules/.bin/http-server provider -p 3002",
     "demo": "./node_modules/.bin/babel-node provider/auth.js",
     "build": "./node_modules/.bin/babel src -d lib"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@jwalsh/jsonwebtoken": "^7.2.2",
     "blockstack-auth": "^0.2.1",
-    "@jwalsh/jsonwebtoken": "^7.2.2"
+    "express": "^4.14.0"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-preset-env": "^1.1.4",
     "babel-preset-latest": "^6.16.0",
+    "http-server": "^0.9.0",
     "nodemon": "^1.11.0"
   }
 }

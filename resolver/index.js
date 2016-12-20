@@ -2,7 +2,10 @@ var express = require('express')
 var app = express()
 
 app.get('/', function (req, res) {
-  res.send('Sending request to callback');
+  res.send({
+	id: "akscanb.id",
+	digitally_signed_payload: "XXXXXXXXXXXXXXXXX"
+  });
 });
 
 app.listen(3001, function () {
