@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.css" integrity="sha256-c9OCpXgYepI8baar2x81YigAWryLIoQ2k0/7cCb1JAg=" crossorigin="anonymous" />
+  </head>
+  <body>
+    <h1>Signing Request</h1>
+    <h2>User: Abigail</h2>
+
+    <form action="http://localhost:3001">
+      <h3>Signing Identity</h3>
+      <input type="text" name="id" value="abigail.id">
+      <h3>Document</h3>
+      <textarea name="docx">
+Nullam eu ante vel est convallis dignissim.  Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio.  Nunc porta vulputate tellus.  Nunc rutrum turpis sed pede.  Sed bibendum.  Aliquam posuere.  Nunc aliquet, augue nec adipiscing interdum, lacus tellus malesuada massa, quis varius mi purus non odio.  Pellentesque condimentum, magna ut suscipit hendrerit, ipsum augue ornare nulla, non luctus diam neque sit amet urna.  Curabitur vulputate vestibulum lorem.  Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.  Sed id ligula quis est convallis tempor.  Curabitur lacinia pulvinar nibh.  Nam a sapien.
+      </textarea>
+      <h3>Callback</h3>
+      <pre>
+        sig_packets/:guid/?callback_token=some_limited_time_non_guessable_one_time_token
+      </pre>
+      <input type="text" name="callback_url" value="https://localhost:3000/"/>
+      <h3>Resolver</h3>
+      <input type="submit"/>
+    </form>
+  </body>
+</html>
