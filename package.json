@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "npm run signer & npm run resolver & npm run provider",
     "signer": "./node_modules/.bin/http-server signer -p 3000",
     "resolver": "cd resolver && nodemon index.js localhost 3001",
     "provider": "./node_modules/.bin/http-server provider -p 3002",
