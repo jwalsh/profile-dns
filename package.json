@@ -1,14 +1,14 @@
 {
   "name": "@jwalsh/profile-dns",
   "version": "1.0.0",
-  "description": "",
+  "description": "Example workflow for Loan Attestation and Signing",
   "main": "index.js",
   "scripts": {
-    "start": "npm run signer & npm run resolver & npm run provider",
-    "signer": "./node_modules/.bin/http-server signer -p 3000",
-    "resolver": "cd resolver && nodemon index.js localhost 3001",
-    "provider": "./node_modules/.bin/http-server provider -p 3002",
-    "demo": "./node_modules/.bin/babel-node provider/auth.js",
+    "start": "npm run dg & npm run as & npm run is",
+    "dg": "./node_modules/.bin/http-server document-generator -p 3000",
+    "as": "cd attestation-service && nodemon index.js localhost 3001",
+    "is": "./node_modules/.bin/http-server identity-signing -p 3002",
+    "demo": "./node_modules/.bin/babel-node attestation-service/auth.js",
     "build": "./node_modules/.bin/babel src -d lib"
   },
   "author": "",
