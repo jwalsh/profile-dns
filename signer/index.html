@@ -3,13 +3,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.css" integrity="sha256-c9OCpXgYepI8baar2x81YigAWryLIoQ2k0/7cCb1JAg=" crossorigin="anonymous" />
   </head>
   <body>
-    <h1>Signing Request</h1>
+    <h1>Loan Facilitator: Acme Inc.: Signing Request</h1>
     <h2>User: Abigail</h2>
 
     <form action="http://localhost:3001">
       <h3>Signing Identity</h3>
       <p>Your Blockstack Identity:</p>
-      <input type="text" name="id" value="abigail.id">
+      <input type="text" name="signer_id" value="a.id">
+      <p>Co-signer Identity:</p>
+      <input type="text" name="cosigner_id" value="b.id">
       <h3>Document</h3>
       <p>You are being requested to sign the following document:</p>
       <textarea name="docx">
