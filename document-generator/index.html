@@ -1,6 +1,8 @@
 <html>
   <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/4.0.2/bootstrap-material-design.css" integrity="sha256-c9OCpXgYepI8baar2x81YigAWryLIoQ2k0/7cCb1JAg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
   <body>
     <h1>Loan Facilitator: Acme Inc.: Signing Request</h1>
@@ -14,9 +16,27 @@
       <input type="text" name="cosigner_id" value="b.id">
       <h3>Document</h3>
       <p>You are being requested to sign the following document:</p>
+      <ul>
+        <li>Markdown</li>
+        <li>View Note</li>
+      </ul>
       <textarea name="docx">
-Nullam eu ante vel est convallis dignissim.  Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio.  Nunc porta vulputate tellus.  Nunc rutrum turpis sed pede.  Sed bibendum.  Aliquam posuere.  Nunc aliquet, augue nec adipiscing interdum, lacus tellus malesuada massa, quis varius mi purus non odio.  Pellentesque condimentum, magna ut suscipit hendrerit, ipsum augue ornare nulla, non luctus diam neque sit amet urna.  Curabitur vulputate vestibulum lorem.  Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.  Sed id ligula quis est convallis tempor.  Curabitur lacinia pulvinar nibh.  Nam a sapien.
-      </textarea>
+        Simple Promissory Note
+
+__________________   ___________________________      _______________
+   City  			                 State  				   Date
+
+                              (Borrower)          agrees and promises to pay to                        (Lender)       the sum of  ($                     )   Dollars for value received, with interest at the annual rate of                % payable after          (Date)           .
+If this note is in default and is placed for collection,       (Borrower)            shall pay all reasonable costs of collection and attorneys' fees.
+
+
+____________________________ By_________________________________
+(Borrower)                          (Date)
+____________________________  By_________________________________
+(Lender)                              (Date)
+_________________________________
+(Witness)                             (Date)
+
       <h3>Callback</h3>
       <pre>
         sig_packets/:guid/?callback_token=some_limited_time_non_guessable_one_time_token
