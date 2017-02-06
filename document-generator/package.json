@@ -1,0 +1,11 @@
+{
+  "name": "@jwalsh/document-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --content-base build/"
+  },
+  "author": "Jason Walsh <j@wal.sh>",
+  "license": "ISC"
+}
