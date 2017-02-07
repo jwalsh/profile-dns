@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="urn:oasis:names:tc:eContracts:1:0" xmlns:ec="urn:oasis:names:tc:eContracts:1:0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <xs:include schemaLocation="eContracts-core.xsd"/>
+  <xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="dc-metadata.xsd"/>
+  <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="xi-include.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <!--
+    
+    COPYRIGHT
+    The eContracts Reference Schema is Copyright 2006, OASIS Open 
+    All Rights Reserved.
+    
+    The eContracts Reference Schema is derived from the BNML Standard Schema.
+    The BNML Standard Schema is Copyright 2000-2005, Elkera Pty Limited.
+    All Rights Reserved.
+    
+    The copyright holders grant an unlimited perpetual, non-exclusive, 
+    royalty-free, world-wide right and license to copy, publish and 
+    distribute the eContracts Schema in any way, and to prepare 
+    derivative works that are based on or incorporate all or part of the 
+    eContracts Reference Schema.
+    
+    The copyright holders make no representation about the suitability of 
+    the eContracts Reference Schema for any purpose. It is provided 
+     "as is" without express or implied warranty.
+    
+    If you create a derivative work in any way from the eContracts 
+    Reference Schema, you must rename the schema files in accordance 
+    with the Customization guidelines in the eContracts Specification at:
+    
+    http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=legalxml-econtracts.
+    
+    If your derivative work is not a subset or variant under the eContracts 
+    Specification, you may not use "eContracts" in the name of your 
+    derivative work.
+    
+    
+    The eContracts-Reference.rnc file is the main file that defines the 
+    eContracts Reference schema. This is an umbrella file for the schema that 
+    serves two purposes:
+    
+             (a) it contains statements to include the other files that 
+                 provide element definitions for all elements found in  
+                 the eContracts schema. 
+    
+             (b) it can be used to make customizations to the eContracts 
+                 schema by changing the content patterns that are defined 
+                 in the other schema files.
+    
+    
+    VERSION HISTORY
+    
+    OASIS Technical Commitee Specification 1.0, 27 April 2007
+    
+  -->
+  <!--
+    DUBLIN CORE METADATA
+    
+    This section includes Dublin core metadata elements into the application.
+    
+  -->
+  <!--
+    INCLUDE eCONTRACTS CORE
+    
+    This statement includes the core eContracts element definitions into 
+    the application. 
+    
+  -->
+  <xs:complexType name="metadata.content">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:choice minOccurs="0" maxOccurs="unbounded">
+      <xs:group ref="dc:dc.metadata.content"/>
+      <xs:element ref="ec:conditions"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:element name="conditions">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ec:condition"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="condition">
+    <xs:complexType mixed="true">
+      <xs:attribute name="name" use="required" type="xs:string"/>
+      <xs:attribute name="default" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <!-- ACTIVATE CONDITIONAL TEXT -->
+  <!-- add the condition attribute to all eContract elements. -->
+  <!-- add the conditions structure to the metadata element    -->
+  <!-- ACTIVATE CONTENT RE-USE -->
+  <!-- WAI COMPATIBILITY OPTIONS -->
+  <!-- PRIORITY 1 additions -->
+  <!-- PRIORITY 3 additions -->
+</xs:schema>

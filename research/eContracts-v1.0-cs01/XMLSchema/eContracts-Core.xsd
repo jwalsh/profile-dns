@@ -1,0 +1,1237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="urn:oasis:names:tc:eContracts:1:0" xmlns:ec="urn:oasis:names:tc:eContracts:1:0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="dc-metadata.xsd"/>
+  <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="xi-include.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <!--
+    
+    COPYRIGHT
+    The eContracts Core Schema is Copyright 2006, OASIS Open 
+    All Rights Reserved.
+    
+    The eContracts Core Schema is derived from the BNML Standard Schema.
+    The BNML Standard Schema is Copyright 2000-2005, Elkera Pty Limited.
+    All Rights Reserved.
+    
+    The copyright holders grant an unlimited perpetual, non-exclusive, 
+    royalty-free, world-wide right and license to copy, publish and 
+    distribute the eContracts Schema in any way, and to prepare 
+    derivative works that are based on or incorporate all or part of the 
+    eContracts Core Schema.
+    
+    The copyright holders make no representation about the suitability of 
+    the eContracts Core Schema for any purpose. It is provided 
+     "as is" without express or implied warranty.
+    
+    If you create a derivative work in any way from the eContracts 
+    Core Schema, you must rename the schema files in accordance 
+    with the Customization guidelines in the eContracts Specification at:
+    
+    http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=legalxml-econtracts.
+    
+    If your derivative work is not a subset or variant under the eContracts 
+    Specification, you may not use "eContracts" in the name of your 
+    derivative work.
+    
+    
+    This eContracts-core.rnc file contains all element definitions for 
+    the eContracts schema that are not included from another namespace.
+    
+    
+    VERSION HISTORY
+    
+    OASIS Technical Commitee Specification 1.0, 27 April 2007
+    
+  -->
+  <xs:element name="contract">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ec:metadata"/>
+        <xs:element ref="ec:title"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:subtitle"/>
+        <xs:element minOccurs="0" ref="ec:contract-front"/>
+        <xs:element ref="ec:body"/>
+        <xs:element minOccurs="0" ref="ec:back"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:attachments"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:contract.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="contract.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:contract.class.attribute"/>
+    <xs:attributeGroup ref="ec:orient.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="contract.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="contract-front">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:sequence>
+            <xs:element minOccurs="0" ref="ec:date-block"/>
+            <xs:element ref="ec:parties"/>
+          </xs:sequence>
+          <xs:element maxOccurs="unbounded" ref="ec:block"/>
+        </xs:choice>
+        <xs:element minOccurs="0" ref="ec:background"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:contract-front.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="contract-front.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:contract-front.class.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="contract-front.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="date-block">
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ec:text.content.inner"/>
+      <xs:attributeGroup ref="ec:date-block.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="date-block.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="parties">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ec:title"/>
+        <xs:element maxOccurs="unbounded" ref="ec:party"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:parties.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="parties.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:parties.class.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="parties.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="party">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ec:person-record"/>
+        <xs:element ref="ec:term"/>
+      </xs:choice>
+      <xs:attributeGroup ref="ec:party.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="party.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:party.class.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="party.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="person-record">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ec:name"/>
+        <xs:element ref="ec:address"/>
+        <xs:element ref="ec:field"/>
+        <xs:element ref="ec:term"/>
+      </xs:choice>
+      <xs:attributeGroup ref="ec:person-record.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="person-record.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:person-record.class.attribute"/>
+    <xs:attributeGroup ref="ec:person-record.party-id.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="person-record.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="person-record.party-id.attribute">
+    <xs:attribute name="party-id" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:element name="background">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ec:title"/>
+        <xs:group minOccurs="0" maxOccurs="unbounded" ref="ec:item.reuse.model"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:background.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="background.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="body">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ec:title"/>
+        <xs:group ref="ec:body.structure.model"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:body.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="body.structure.model">
+    <xs:sequence>
+      <xs:group ref="ec:loose.structure.model"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:attributeGroup name="body.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="back">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ec:title"/>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:choice>
+            <xs:group ref="ec:back.structure.model"/>
+            <xs:element ref="ec:party-signature"/>
+          </xs:choice>
+          <xs:element ref="ec:date-block"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:back.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="back.structure.model">
+    <xs:sequence>
+      <xs:group ref="ec:loose.structure.model"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:attributeGroup name="back.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="attachments">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ec:attachment"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:attachments.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="attachments.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="attachment">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ec:metadata"/>
+        <xs:element minOccurs="0" ref="ec:title"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:subtitle"/>
+        <xs:choice minOccurs="0">
+          <xs:group ref="ec:attachment.doctypes"/>
+          <xs:group ref="ec:attachment.structure.model"/>
+        </xs:choice>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:attachment.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="attachment.structure.model">
+    <xs:sequence>
+      <xs:group ref="ec:loose.structure.model"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:attributeGroup name="attachment.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:common.number.attribute"/>
+    <xs:attributeGroup ref="ec:attachment.class.attribute"/>
+    <xs:attributeGroup ref="ec:orient.attribute"/>
+    <xs:attributeGroup ref="ec:stop-contents.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="attachment.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:group name="attachment.doctypes">
+    <xs:sequence>
+      <xs:element ref="ec:contract"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:element name="metadata">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="ec:metadata.content">
+          <xs:attributeGroup ref="ec:metadata.attlist"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="metadata.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="title">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ec:text"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:title.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="title.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="subtitle">
+    <xs:complexType mixed="true">
+      <xs:group ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:subtitle.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="subtitle.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="item">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ec:metadata"/>
+        <xs:element minOccurs="0" ref="ec:title"/>
+        <xs:group ref="ec:item.structure.model"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:item.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="item.structure.model">
+    <xs:sequence>
+      <xs:group ref="ec:loose.structure.model"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="item.reuse.model">
+    <xs:choice>
+      <xs:element ref="ec:item"/>
+      <xs:element ref="xi:include"/>
+    </xs:choice>
+  </xs:group>
+  <xs:attributeGroup name="item.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:item.class.attribute"/>
+    <xs:attributeGroup ref="ec:common.number.attribute"/>
+    <xs:attributeGroup ref="ec:conditional.attributes"/>
+    <xs:attributeGroup ref="ec:stop-contents.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="item.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="block">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="ec:block.level.elements"/>
+        <xs:element name="item">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element minOccurs="0" ref="ec:metadata"/>
+              <xs:element minOccurs="0" ref="ec:title"/>
+              <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="ec:block"/>
+                <xs:element ref="ec:inclusion"/>
+              </xs:choice>
+            </xs:sequence>
+            <xs:attributeGroup ref="ec:block.item.attlist"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+      <xs:attributeGroup ref="ec:block.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="block.level.elements">
+    <xs:choice>
+      <xs:choice>
+        <xs:group ref="ec:text.container.element"/>
+        <xs:element ref="ec:definition"/>
+        <xs:element ref="ec:table"/>
+        <xs:element ref="ec:inclusion"/>
+      </xs:choice>
+      <xs:element ref="xi:include"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="text.container.element">
+    <xs:sequence>
+      <xs:element ref="ec:text"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:attributeGroup name="block.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:block.class.attribute"/>
+    <xs:attributeGroup ref="ec:conditional.attributes"/>
+    <xs:attributeGroup ref="ec:block.numbering.attributes"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="block.numbering.attributes">
+    <xs:attributeGroup ref="ec:block.number.type"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="block.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="block.number.type">
+    <xs:attribute name="number-type" type="ec:ListItemNumberTypes"/>
+  </xs:attributeGroup>
+  <xs:simpleType name="ListItemNumberTypes">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="manual"/>
+      <xs:enumeration value="none"/>
+      <xs:enumeration value="disc"/>
+      <xs:enumeration value="line"/>
+      <xs:enumeration value="number"/>
+      <xs:enumeration value="loweralpha"/>
+      <xs:enumeration value="upperalpha"/>
+      <xs:enumeration value="lowerroman"/>
+      <xs:enumeration value="upperroman"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attributeGroup name="block.item.attlist">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:block.item.class.attribute"/>
+    <xs:attributeGroup ref="ec:common.number.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="block.item.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="text">
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ec:text.content.inner"/>
+      <xs:attributeGroup ref="ec:text.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="text.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:text.class.attribute"/>
+    <xs:attributeGroup ref="ec:text.textflow.attribute"/>
+    <xs:attributeGroup ref="ec:text.xmlspace.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="text.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="text.textflow.attribute">
+    <xs:attribute name="textflow">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="runon"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="text.xmlspace.attribute">
+    <xs:attribute ref="xml:space" default="default"/>
+  </xs:attributeGroup>
+  <xs:element name="inclusion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ec:metadata"/>
+        <xs:element minOccurs="0" ref="ec:title"/>
+        <xs:group ref="ec:inclusion.structure.model"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:inclusion.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="inclusion.structure.model">
+    <xs:sequence>
+      <xs:group ref="ec:loose.structure.model"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:attributeGroup name="inclusion.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:inclusion.class.attribute"/>
+    <xs:attributeGroup ref="ec:common.number.attribute"/>
+    <xs:attributeGroup ref="ec:inclusion.align.attribute"/>
+    <xs:attributeGroup ref="ec:orient.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="inclusion.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="inclusion.align.attribute">
+    <xs:attribute name="align" type="ec:ShortAlignment"/>
+  </xs:attributeGroup>
+  <xs:simpleType name="ClearEnumValues">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="left"/>
+      <xs:enumeration value="right"/>
+      <xs:enumeration value="both"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attributeGroup name="inclusion.width.attribute">
+    <xs:attribute name="width" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:element name="definition">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice>
+          <xs:element ref="ec:term"/>
+          <xs:element ref="ec:terms"/>
+        </xs:choice>
+        <xs:element maxOccurs="unbounded" ref="ec:block"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:definition.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="definition.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:definition.class.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="definition.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="terms">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="ec:inline.content"/>
+        <xs:element ref="ec:term"/>
+      </xs:choice>
+      <xs:attributeGroup ref="ec:terms.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="terms.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="term">
+    <xs:complexType mixed="true">
+      <xs:group ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:term.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="term.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:term.class.attribute"/>
+    <xs:attribute name="abbreviation" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="term.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="name">
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:name.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="name.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:name.class.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="name.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="address">
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:address.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="address.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:address.class.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="address.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="date">
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:date.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="date.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:date.class.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="date.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="note">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ec:block"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:note.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="note.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:note.class.attribute"/>
+    <xs:attributeGroup ref="ec:common.number.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="note.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="note-in-line">
+    <xs:complexType mixed="true">
+      <xs:group ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:note-in-line.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="note-in-line.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:note-in-line.class.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="note-in-line.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="field">
+    <xs:complexType mixed="true">
+      <xs:attributeGroup ref="ec:field.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="field.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:field.class.attribute"/>
+    <xs:attributeGroup ref="ec:field.label.attribute"/>
+    <xs:attributeGroup ref="ec:field.name.attribute"/>
+    <xs:attributeGroup ref="ec:field.type.attribute"/>
+    <xs:attributeGroup ref="ec:field.source.attribute"/>
+    <xs:attributeGroup ref="ec:field.action.attribute"/>
+    <xs:attributeGroup ref="ec:field.length.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="field.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="field.label.attribute">
+    <xs:attribute name="label" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="field.name.attribute">
+    <xs:attribute name="name" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="field.type.attribute">
+    <xs:attribute name="type" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="field.source.attribute">
+    <xs:attribute name="source" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="field.action.attribute">
+    <xs:attribute name="action" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="field.length.attribute">
+    <xs:attribute name="length" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:element name="object">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="ec:data"/>
+        <xs:element ref="ec:fallback"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:object.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="object.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:object.type.attribute"/>
+    <xs:attributeGroup ref="ec:object.scale.attribute"/>
+    <xs:attributeGroup ref="ec:object.rotate.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="object.type.attribute">
+    <xs:attribute name="type" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="object.scale.attribute">
+    <xs:attribute name="scale" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="object.rotate.attribute">
+    <xs:attribute name="rotate" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:element name="data">
+    <xs:complexType>
+      <xs:attributeGroup ref="ec:data.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="data.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:data.src.attribute"/>
+    <xs:attributeGroup ref="ec:data.height.attribute"/>
+    <xs:attributeGroup ref="ec:data.width.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="data.src.attribute">
+    <xs:attribute name="src" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="data.height.attribute">
+    <xs:attribute name="height" type="xs:integer"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="data.width.attribute">
+    <xs:attribute name="width" type="xs:integer"/>
+  </xs:attributeGroup>
+  <xs:element name="fallback">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="ec:inline.content.inner"/>
+        <xs:element ref="ec:object"/>
+      </xs:choice>
+      <xs:attributeGroup ref="ec:fallback.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="fallback.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="reference">
+    <xs:complexType mixed="true">
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:group ref="ec:inline.content"/>
+        <xs:element ref="ec:citation"/>
+      </xs:choice>
+      <xs:attributeGroup ref="ec:reference.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="reference.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:reference.class.attribute"/>
+    <xs:attributeGroup ref="ec:reference.href.attribute"/>
+    <xs:attributeGroup ref="ec:reference.print-url.attribute"/>
+    <xs:attribute name="destination-type" type="xs:string"/>
+    <xs:attribute name="destination-lang" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="reference.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="reference.href.attribute">
+    <xs:attribute name="href" type="xs:anyURI"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="reference.print-url.attribute">
+    <xs:attribute name="print-url" type="xs:boolean"/>
+  </xs:attributeGroup>
+  <xs:element name="citation">
+    <xs:complexType mixed="true">
+      <xs:group ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:citation.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="citation.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="phrase">
+    <xs:complexType mixed="true">
+      <xs:group ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:phrase.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="phrase.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:phrase.class.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="phrase.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="conditional">
+    <xs:complexType mixed="true">
+      <xs:group ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:conditional.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="conditional.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:conditional.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="em">
+    <xs:complexType mixed="true">
+      <xs:group ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:em.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="em.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:em.class.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="em.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="statutory-em">
+    <xs:complexType mixed="true">
+      <xs:group ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:statutory-em.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="statutory-em.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:statutory-em.class.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="statutory-em.class.attribute">
+    <xs:attributeGroup ref="ec:standard.class"/>
+  </xs:attributeGroup>
+  <xs:element name="strike">
+    <xs:complexType mixed="true">
+      <xs:group ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:strike.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="strike.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="sub">
+    <xs:complexType mixed="true">
+      <xs:group ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:sub.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="sub.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="sup">
+    <xs:complexType mixed="true">
+      <xs:group ref="ec:inline.content"/>
+      <xs:attributeGroup ref="ec:sup.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="sup.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="table">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="ec:title"/>
+        <xs:element maxOccurs="unbounded" ref="ec:tgroup"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:table.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="table.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:orient.attribute"/>
+    <xs:attribute name="frame" default="all">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="top"/>
+          <xs:enumeration value="bottom"/>
+          <xs:enumeration value="topbot"/>
+          <xs:enumeration value="all"/>
+          <xs:enumeration value="sides"/>
+          <xs:enumeration value="none"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="colsep" type="xs:boolean"/>
+    <xs:attribute name="rowsep" type="xs:boolean"/>
+    <xs:attribute name="pgwide" type="xs:boolean"/>
+    <xs:attribute name="summary" type="xs:string"/>
+    <xs:attribute name="title" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:element name="tgroup">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:colspec"/>
+        <xs:element minOccurs="0" ref="ec:thead"/>
+        <xs:element ref="ec:tbody"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:tgroup.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="tgroup.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attribute name="cols" use="required" type="xs:NMTOKEN"/>
+    <xs:attribute name="colsep" default="1" type="xs:boolean"/>
+    <xs:attribute name="rowsep" default="1" type="xs:boolean"/>
+    <xs:attribute name="align" default="left" type="ec:TableAlign"/>
+  </xs:attributeGroup>
+  <xs:element name="colspec">
+    <xs:complexType>
+      <xs:attributeGroup ref="ec:colspec.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="colspec.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attribute name="colnum" type="xs:NMTOKEN"/>
+    <xs:attribute name="colname" type="xs:NMTOKEN"/>
+    <xs:attribute name="colwidth" type="xs:string"/>
+    <xs:attribute name="colsep" type="xs:boolean"/>
+    <xs:attribute name="rowsep" type="xs:boolean"/>
+    <xs:attribute name="align" type="ec:TableAlign"/>
+  </xs:attributeGroup>
+  <xs:element name="thead">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ec:row"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:thead.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="thead.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attribute name="valign" default="middle" type="ec:TableValign"/>
+  </xs:attributeGroup>
+  <xs:element name="tbody">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ec:row"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:tbody.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="tbody.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attribute name="valign" default="middle" type="ec:TableValign"/>
+  </xs:attributeGroup>
+  <xs:element name="row">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="ec:entry"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:row.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="row.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attribute name="rowsep" type="xs:boolean"/>
+    <xs:attribute name="valign" type="ec:TableValign"/>
+  </xs:attributeGroup>
+  <xs:element name="entry">
+    <xs:complexType>
+      <xs:complexContent>
+        <xs:extension base="ec:entry.model">
+          <xs:attributeGroup ref="ec:entry.attlist"/>
+        </xs:extension>
+      </xs:complexContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="entry.elements">
+    <xs:choice>
+      <xs:element ref="ec:block"/>
+      <xs:group ref="ec:item.reuse.model"/>
+      <xs:element ref="ec:inclusion"/>
+      <xs:element ref="ec:signature-line"/>
+    </xs:choice>
+  </xs:group>
+  <xs:complexType name="entry.model">
+    <xs:group minOccurs="0" maxOccurs="unbounded" ref="ec:entry.elements"/>
+  </xs:complexType>
+  <xs:attributeGroup name="entry.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attribute name="colname" type="xs:NMTOKEN"/>
+    <xs:attribute name="namest" type="xs:NMTOKEN"/>
+    <xs:attribute name="nameend" type="xs:NMTOKEN"/>
+    <xs:attribute name="morerows" default="0" type="xs:NMTOKEN"/>
+    <xs:attribute name="colsep" type="xs:boolean"/>
+    <xs:attribute name="rowsep" type="xs:boolean"/>
+    <xs:attribute name="align" type="ec:TableAlign"/>
+    <xs:attribute name="valign" type="ec:TableValign"/>
+    <xs:attribute name="is-row-header" type="xs:boolean"/>
+    <xs:attribute name="abbreviation" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:simpleType name="TableValign">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="top"/>
+      <xs:enumeration value="middle"/>
+      <xs:enumeration value="bottom"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TableAlign">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="left"/>
+      <xs:enumeration value="right"/>
+      <xs:enumeration value="center"/>
+      <xs:enumeration value="justify"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="party-signature">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:block"/>
+        <xs:choice>
+          <xs:element ref="ec:signatory-group"/>
+          <xs:element ref="ec:signatory-record"/>
+        </xs:choice>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:block"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:party-signature.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="party-signature.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:party-signature.layout.attribute"/>
+    <xs:attributeGroup ref="ec:party-signature.party-id.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="party-signature.layout.attribute">
+    <xs:attribute name="layout" default="from-left" type="ec:party-signature.layout.values"/>
+  </xs:attributeGroup>
+  <xs:simpleType name="party-signature.layout.values">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="right-column-only"/>
+      <xs:enumeration value="from-left"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attributeGroup name="party-signature.party-id.attribute">
+    <xs:attribute name="party-id" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:element name="signatory-group">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:block"/>
+        <xs:element maxOccurs="unbounded" ref="ec:signatory-record"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:signatory-group.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="signatory-group.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:signatory-group.align-records.attribute"/>
+    <xs:attributeGroup ref="ec:signatory-group.brace.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="signatory-group.align-records.attribute">
+    <xs:attribute name="align-records" type="ec:signatory-group.align-records.values"/>
+  </xs:attributeGroup>
+  <xs:simpleType name="signatory-group.align-records.values">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="horizontal"/>
+      <xs:enumeration value="vertical"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attributeGroup name="signatory-group.brace.attribute">
+    <xs:attribute name="brace" type="ec:signatory-group.brace.values"/>
+  </xs:attributeGroup>
+  <xs:simpleType name="signatory-group.brace.values">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="block-only"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="signatory-record">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:block"/>
+        <xs:choice>
+          <xs:element ref="ec:signatory-record"/>
+          <xs:choice>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" ref="ec:signatory"/>
+              <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:witness"/>
+            </xs:sequence>
+            <xs:sequence>
+              <xs:element maxOccurs="unbounded" ref="ec:witness"/>
+              <xs:element ref="ec:signatory"/>
+            </xs:sequence>
+          </xs:choice>
+        </xs:choice>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:block"/>
+      </xs:sequence>
+      <xs:attributeGroup ref="ec:signatory-record.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="signatory-record.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:signatory-record.align-signatory-witness.attribute"/>
+    <xs:attributeGroup ref="ec:signatory-record.brace.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="signatory-record.align-signatory-witness.attribute">
+    <xs:attribute name="align-signatory-witness" type="ec:align-signatory-witness.values"/>
+  </xs:attributeGroup>
+  <xs:simpleType name="align-signatory-witness.values">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="horizontal"/>
+      <xs:enumeration value="vertical"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:attributeGroup name="signatory-record.brace.attribute">
+    <xs:attribute name="brace" type="ec:brace.values"/>
+  </xs:attributeGroup>
+  <xs:simpleType name="brace.values">
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="block-only"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="signatory">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ec:signature-line"/>
+        <xs:element ref="ec:block"/>
+      </xs:choice>
+      <xs:attributeGroup ref="ec:signatory.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="signatory.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+    <xs:attributeGroup ref="ec:signatory.person-record-id.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="signatory.person-record-id.attribute">
+    <xs:attribute name="person-record-id" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:element name="witness">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ec:signature-line"/>
+        <xs:element ref="ec:block"/>
+      </xs:choice>
+      <xs:attributeGroup ref="ec:witness.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="witness.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:element name="signature-line">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ec:text"/>
+        <xs:element ref="ec:field"/>
+      </xs:choice>
+      <xs:attributeGroup ref="ec:signature-line.attlist"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:attributeGroup name="signature-line.attlist">
+    <xs:attributeGroup ref="ec:common.attributes"/>
+  </xs:attributeGroup>
+  <xs:group name="tight.structure.model">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:inclusion"/>
+      <xs:choice minOccurs="0">
+        <xs:sequence maxOccurs="unbounded">
+          <xs:element ref="ec:block"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:inclusion"/>
+        </xs:sequence>
+        <xs:sequence>
+          <xs:group maxOccurs="unbounded" ref="ec:item.reuse.model"/>
+          <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:inclusion"/>
+        </xs:sequence>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="standard.structure.model">
+    <xs:annotation>
+      <xs:documentation>Standard structure model</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:inclusion"/>
+      <xs:sequence minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ec:block"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:inclusion"/>
+      </xs:sequence>
+      <xs:sequence>
+        <xs:group maxOccurs="unbounded" ref="ec:item.reuse.model"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="ec:inclusion"/>
+      </xs:sequence>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="loose.structure.model">
+    <xs:annotation>
+      <xs:documentation>Loose structure model</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="ec:block"/>
+        <xs:element ref="ec:inclusion"/>
+        <xs:group ref="ec:item.reuse.model"/>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="inline.content">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ec:inline.content.inner"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="inline.content.inner">
+    <xs:choice>
+      <xs:choice minOccurs="0">
+        <xs:element ref="ec:reference"/>
+        <xs:element ref="ec:em"/>
+        <xs:element ref="ec:statutory-em"/>
+        <xs:element ref="ec:strike"/>
+        <xs:element ref="ec:sub"/>
+        <xs:element ref="ec:sup"/>
+        <xs:element ref="ec:field"/>
+      </xs:choice>
+      <xs:element ref="ec:conditional"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="text.content">
+    <xs:sequence>
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="ec:text.content.inner"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:group name="text.content.inner">
+    <xs:choice>
+      <xs:group ref="ec:inline.content.inner"/>
+      <xs:element ref="ec:object"/>
+      <xs:element ref="ec:term"/>
+      <xs:element ref="ec:phrase"/>
+      <xs:element ref="ec:note"/>
+      <xs:element ref="ec:note-in-line"/>
+      <xs:element ref="ec:name"/>
+      <xs:element ref="ec:address"/>
+      <xs:element ref="ec:date"/>
+      <xs:element ref="ec:party"/>
+      <xs:element ref="ec:person-record"/>
+    </xs:choice>
+  </xs:group>
+  <!-- STANDARD ATTRIBUTE DEFINITIONS -->
+  <xs:attributeGroup name="common.attributes">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:attributeGroup ref="ec:id.attributes"/>
+    <xs:attribute ref="xml:lang"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="id.attributes">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:attribute name="id" type="xs:ID"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="standard.class">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:attribute name="class" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="common.number.attribute">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:attribute name="number" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="conditional.attributes">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:attributeGroup ref="ec:condition.attribute"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="condition.attribute">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:attribute name="condition" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="stop-contents.attribute">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:attribute name="stop-contents">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="below"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="orient.attribute">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:attribute name="orient">
+      <xs:simpleType>
+        <xs:restriction base="xs:token">
+          <xs:enumeration value="portrait"/>
+          <xs:enumeration value="landscape"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <!-- STANDARD TYPE DEFINITIONS -->
+  <xs:simpleType name="ShortAlignment">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="left"/>
+      <xs:enumeration value="center"/>
+      <xs:enumeration value="right"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LongAlignment">
+    <xs:annotation>
+      <xs:documentation/>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="left"/>
+      <xs:enumeration value="center"/>
+      <xs:enumeration value="right"/>
+      <xs:enumeration value="justify"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

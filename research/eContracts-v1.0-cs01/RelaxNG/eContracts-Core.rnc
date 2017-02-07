@@ -1,0 +1,1478 @@
+namespace local = "urn:oasis:names:tc:eContracts:1:0"
+namespace xsi = "http://www.w3.org/2001/XMLSchema-instance"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+namespace xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+
+###########################################################################
+#
+# COPYRIGHT
+# The eContracts Core Schema is Copyright 2006, OASIS Open 
+# All Rights Reserved.
+#
+# The eContracts Core Schema is derived from the BNML Standard Schema.
+# The BNML Standard Schema is Copyright 2000-2005, Elkera Pty Limited.
+# All Rights Reserved.
+#
+# The copyright holders grant an unlimited perpetual, non-exclusive, 
+# royalty-free, world-wide right and license to copy, publish and 
+# distribute the eContracts Schema in any way, and to prepare 
+# derivative works that are based on or incorporate all or part of the 
+# eContracts Core Schema.
+#
+# The copyright holders make no representation about the suitability of 
+# the eContracts Core Schema for any purpose. It is provided 
+#  "as is" without express or implied warranty.
+#
+# If you create a derivative work in any way from the eContracts 
+# Core Schema, you must rename the schema files in accordance 
+# with the Customization guidelines in the eContracts Specification at:
+#
+# http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=legalxml-econtracts.
+#
+# If your derivative work is not a subset or variant under the eContracts 
+# Specification, you may not use "eContracts" in the name of your 
+# derivative work.
+#
+#
+# This eContracts-core.rnc file contains all element definitions for 
+# the eContracts schema that are not included from another namespace.
+#
+#
+# VERSION HISTORY
+#
+# OASIS Technical Commitee Specification 1.0, 27 April 2007
+#
+###########################################################################
+
+
+
+grammar {
+
+
+start = contract
+
+###########################################################################
+# CONTRACT
+###########################################################################
+
+contract = element contract {
+    metadata?, title, subtitle*,
+    contract-front?,
+    body,
+    back?,
+    attachments*,
+
+    contract.attlist
+}
+
+
+contract.attlist =
+    common.attributes,
+    contract.class.attribute,
+    orient.attribute,
+    contract.numbering.attributes,
+    contract.attlist.extensions
+
+
+contract.numbering.attributes = empty
+contract.class.attribute =      standard.class        
+contract.attlist.extensions =   empty
+
+
+
+###########################################################################
+# CONTRACT-FRONT
+###########################################################################
+
+contract-front = element contract-front {
+
+    (((date-block?, parties) | block+), background?),
+    
+    contract-front.attlist
+}
+
+
+contract-front.attlist =
+    common.attributes,
+    contract-front.class.attribute,
+    contract-front.attlist.extensions
+    
+    
+contract-front.class.attribute =    standard.class
+contract-front.attlist.extensions = empty
+
+
+
+###########################################################################
+# DATE-BLOCK
+###########################################################################
+
+date-block = element date-block {
+    (text.content.inner)*,
+    
+    date-block.attlist
+}
+
+date-block.attlist = 
+    common.attributes,
+    date-block.attlist.extensions        
+
+date-block.attlist.extensions = empty
+
+
+
+
+###########################################################################
+# PARTIES
+###########################################################################
+
+parties = element parties {
+
+    title?, party+,
+
+    parties.attlist
+}
+
+
+parties.attlist =
+    common.attributes,
+    parties.class.attribute,
+    parties.attlist.extensions
+
+    
+parties.class.attribute =    standard.class    
+parties.attlist.extensions = empty   
+
+
+
+###########################################################################
+# PARTY
+###########################################################################
+
+party = element party {
+
+    (text | person-record | term)*,
+
+    party.attlist
+}
+
+
+party.attlist =
+    common.attributes,
+    party.class.attribute,
+    party.attlist.extensions
+
+    
+party.class.attribute =    standard.class    
+party.attlist.extensions = empty   
+
+
+
+###########################################################################
+# PERSON-RECORD
+###########################################################################
+
+person-record = element person-record {
+
+    (text | name | address | field | term)*,
+
+    person-record.attlist
+}
+
+
+person-record.attlist =
+    common.attributes,
+    person-record.class.attribute,
+    person-record.party-id.attribute,
+    person-record.attlist.extensions
+
+    
+person-record.class.attribute =     standard.class    
+person-record.party-id.attribute =  attribute party-id { xsd:string }?    
+person-record.attlist.extensions =  empty   
+
+
+
+
+
+###########################################################################
+# BACKGROUND
+###########################################################################
+
+background = element background {
+
+    title?, item.reuse.model*,
+
+    background.attlist
+}
+    
+background.attlist =
+    common.attributes,
+    backgound.numbering.attributes,
+    background.attlist.extensions
+    
+
+backgound.numbering.attributes =    empty
+background.attlist.extensions =     empty            
+
+
+
+
+###########################################################################
+# BODY
+###########################################################################
+
+body = element body {
+
+    title?, body.structure.model,
+    
+    body.attlist
+}
+
+
+body.structure.model = loose.structure.model
+
+body.attlist = 
+    common.attributes,
+    body.attlist.extensions
+
+body.attlist.extensions = empty
+
+
+
+###########################################################################
+# BACK
+###########################################################################
+
+back = element back {
+    title?, ((back.structure.model | party-signature)* & date-block?),
+    
+    back.attlist
+}
+
+back.structure.model = loose.structure.model
+
+
+back.attlist = 
+    common.attributes,
+    back.numbering.attributes,
+    back.attlist.extensions
+
+    
+back.numbering.attributes =     empty
+back.attlist.extensions =       empty
+
+
+
+
+###########################################################################
+# ATTACHMENTS
+###########################################################################
+
+attachments = element attachments {
+
+    attachment+,
+    
+    attachments.attlist
+}
+
+
+attachments.attlist = 
+    common.attributes,
+    attachment.numbering.attributes,
+    attachments.attlist.extensions
+
+attachments.numbering.attributes =      empty
+attachments.attlist.extensions = empty
+
+
+
+    
+###########################################################################
+# ATTACHMENT
+###########################################################################
+
+attachment = element attachment {
+    metadata?, title?, subtitle*,
+    (attachment.doctypes | attachment.structure.model)?,
+
+    attachment.attlist
+}
+
+attachment.structure.model = loose.structure.model
+
+attachment.attlist = 
+    common.attributes,
+    common.number.attribute,
+    attachment.class.attribute,        
+    orient.attribute,
+    stop-contents.attribute,
+    attachment.numbering.attributes,
+    attachment.attlist.extensions
+
+attachment.numbering.attributes =   empty
+attachment.class.attribute =        standard.class
+attachment.attlist.extensions =     empty
+attachment.doctypes =               contract
+
+
+
+
+###########################################################################
+# METADATA
+###########################################################################
+
+metadata = element metadata {
+    metadata.content,
+
+    metadata.attlist
+}
+
+metadata.content = empty
+
+metadata.attlist = 
+        common.attributes,
+        metadata.attlist.extensions
+
+metadata.attlist.extensions = empty
+
+
+
+
+###########################################################################
+# TITLE
+###########################################################################
+
+title = element title {
+    \text+,
+
+    title.attlist
+}
+
+title.attlist = 
+    common.attributes,
+    title.attlist.extensions
+    
+title.attlist.extensions = empty       
+
+        
+        
+###########################################################################
+# SUBTITLE
+###########################################################################
+
+subtitle = element subtitle {
+    inline.content,
+    
+    subtitle.attlist
+}
+
+subtitle.attlist = 
+    common.attributes,
+    subtitle.attlist.extensions
+    
+subtitle.attlist.extensions = empty
+
+
+
+###########################################################################
+# ITEM
+###########################################################################
+
+item = element item {
+    metadata?, title?, item.structure.model,
+    item.attlist
+}
+
+
+item.structure.model = loose.structure.model
+item.reuse.model = (item)
+
+item.attlist =
+    common.attributes,
+    item.class.attribute,
+    common.number.attribute,
+    conditional.attributes,
+    stop-contents.attribute,
+    item.numbering.attributes,
+    item.attlist.extensions
+
+
+item.numbering.attributes =     empty
+item.class.attribute =          standard.class
+item.attlist.extensions =       empty
+
+
+
+###########################################################################
+# BLOCK
+###########################################################################
+
+block = element block {
+            (block.level.elements |
+                    element item {
+                        metadata?, title?, (block | inclusion)*,
+                        block.item.attlist
+                    }
+            )*,
+
+    block.attlist        
+}
+
+
+block.level.elements = text.container.element | definition | table | inclusion
+text.container.element = \text
+
+
+block.attlist =
+    common.attributes,
+    block.class.attribute,
+    conditional.attributes,
+    block.numbering.attributes,
+    block.attlist.extensions
+
+
+block.numbering.attributes = 
+    block.number.type
+
+
+block.class.attribute = standard.class
+block.number.type =     attribute number-type { ListItemNumberTypes }?
+
+ListItemNumberTypes =   "manual"
+                      | "none" 
+                      | "disc" 
+                      | "line" 
+                      | "number" 
+                      | "loweralpha" 
+                      | "upperalpha" 
+                      | "lowerroman" 
+                      | "upperroman"
+        
+block.attlist.extensions = empty           
+
+
+
+###########################################################################
+# ITEM (LIST ITEM) ATTRIBUTES
+###########################################################################
+
+block.item.attlist =
+    common.attributes,
+    block.item.class.attribute,
+    common.number.attribute,
+    block.item.numbering.attributes,
+    block.item.attlist.extensions
+    
+
+block.item.class.attribute =        standard.class
+block.item.numbering.attributes =   empty
+block.item.attlist.extensions =     empty
+
+
+
+###########################################################################
+# TEXT
+###########################################################################
+
+\text = element text {
+    (text.content.inner)*,
+    
+    text.attlist
+}
+
+text.attlist =
+    common.attributes,
+    text.class.attribute,
+    text.textflow.attribute,
+    text.xmlspace.attribute,
+    text.attlist.extensions
+    
+text.class.attribute =      standard.class        
+text.textflow.attribute =   attribute textflow  { "runon" }?
+
+text.xmlspace.attribute =   
+        [ a:defaultValue = "default" ]
+        attribute xml:space { "default" | "preserve" }?
+    
+text.attlist.extensions =   empty
+
+
+
+###########################################################################
+# INCLUSION
+###########################################################################
+
+inclusion = element inclusion {
+
+    metadata?, title?, inclusion.structure.model,
+    inclusion.attlist
+
+}
+
+
+inclusion.structure.model = loose.structure.model
+
+
+inclusion.attlist = 
+    common.attributes,
+    inclusion.class.attribute,
+    common.number.attribute,
+    inclusion.align.attribute,
+    orient.attribute,
+    inclusion.numbering.attributes,
+    inclusion.attlist.extensions
+
+
+inclusion.numbering.attributes =    empty
+inclusion.class.attribute =         standard.class     
+inclusion.align.attribute =         attribute align { ShortAlignment }?
+
+
+ClearEnumValues = "left" | "right" | "both"
+
+
+inclusion.width.attribute = attribute width { xsd:string }?
+inclusion.attlist.extensions = empty
+
+
+
+
+
+###########################################################################
+# DEFINITION
+###########################################################################
+
+definition = element definition {
+    (term | terms), block+,
+    
+    definition.attlist
+}
+
+definition.attlist = 
+        common.attributes,
+        definition.class.attribute,
+        definition.attlist.extensions
+        
+definition.class.attribute =    standard.class            
+definition.attlist.extensions = empty
+
+
+
+###########################################################################
+# TERMS
+###########################################################################
+
+terms = element terms {
+    (inline.content | term)*,
+    
+    terms.attlist
+}
+
+terms.attlist = 
+    common.attributes,
+    terms.attlist.extensions
+
+
+terms.attlist.extensions = empty
+
+
+
+###########################################################################
+# TERM
+###########################################################################
+
+term = element term {
+    inline.content,
+    
+    term.attlist
+}
+
+term.attlist = 
+        common.attributes,
+        term.class.attribute,
+        term.attlist.extensions
+        
+term.class.attribute =      standard.class            
+term.attlist.extensions =   empty
+
+
+
+###########################################################################
+# NAME
+###########################################################################
+
+name = element name {
+    (inline.content)*,
+    
+    name.attlist
+}
+
+name.attlist = 
+        common.attributes,
+        name.class.attribute,
+        name.attlist.extensions
+        
+name.class.attribute =      standard.class            
+name.attlist.extensions =   empty
+
+
+
+###########################################################################
+# ADDRESS
+###########################################################################
+
+address = element address {
+    (inline.content)*,
+    
+    address.attlist
+}
+
+address.attlist = 
+        common.attributes,
+        address.class.attribute,
+        address.attlist.extensions
+        
+address.class.attribute =       standard.class            
+address.attlist.extensions =    empty
+
+
+
+###########################################################################
+# DATE
+###########################################################################
+
+
+date = element date {
+    (inline.content)*,
+    
+    date.attlist
+}
+
+date.attlist = 
+        common.attributes,
+        date.class.attribute,
+        date.attlist.extensions        
+        
+date.class.attribute =      standard.class 
+date.attlist.extensions =   empty
+
+
+
+###########################################################################
+# NOTE
+###########################################################################
+
+note = element note {
+    block+,
+    
+    note.attlist
+}
+
+note.attlist = 
+        common.attributes,
+        note.class.attribute,
+        common.number.attribute,
+        note.attlist.extensions
+        
+note.class.attribute =      standard.class
+note.attlist.extensions =   empty
+
+
+
+###########################################################################
+# NOTE-IN-LINE
+###########################################################################
+
+note-in-line = element note-in-line {
+    inline.content,
+    
+    note-in-line.attlist
+}
+
+note-in-line.attlist = 
+        common.attributes,
+        note-in-line.class.attribute,
+        note-in-line.attlist.extensions
+        
+note-in-line.class.attribute =      standard.class
+note-in-line.attlist.extensions =   empty
+
+
+
+###########################################################################
+# FIELD
+###########################################################################
+
+field = element field {
+    text,
+    
+    field.attlist
+}
+
+field.attlist = 
+    common.attributes,
+    field.class.attribute,
+    field.label.attribute,
+    field.name.attribute,
+    field.type.attribute,
+    field.source.attribute,
+    field.action.attribute,
+    field.length.attribute,
+    field.attlist.extensions
+    
+
+field.class.attribute =     standard.class
+field.label.attribute =     attribute label { xsd:string }?
+field.name.attribute =      attribute name { xsd:string }?
+field.type.attribute =      attribute type { xsd:string }?
+field.source.attribute =    attribute source { xsd:string }?
+field.action.attribute =    attribute action { xsd:string }?
+field.length.attribute =    attribute length  { xsd:string }?
+
+field.attlist.extensions =  empty
+
+
+
+###########################################################################
+# OBJECT
+###########################################################################
+
+object = element object {
+    data, fallback,
+    
+    object.attlist
+}
+
+
+object.attlist =
+    common.attributes,
+    object.type.attribute,
+    object.scale.attribute,
+    object.rotate.attribute,
+    object.attlist.extensions
+        
+        
+object.type.attribute =     attribute type { xsd:string }?
+object.scale.attribute =    attribute scale   { xsd:string }?
+object.rotate.attribute =   attribute rotate  { xsd:string }?
+
+object.attlist.extensions = empty
+
+
+
+###########################################################################
+# DATA
+###########################################################################
+
+data = element data {
+        data.content,
+        
+        data.attlist
+}
+
+data.content = empty
+
+data.attlist = 
+        common.attributes,
+        data.src.attribute,
+        data.height.attribute,
+        data.width.attribute,
+        data.attlist.extensions
+        
+
+data.src.attribute =    attribute src { xsd:string }?
+data.height.attribute = attribute height   { xsd:integer }?
+data.width.attribute =  attribute width   { xsd:integer }?
+
+data.attlist.extensions = empty
+
+
+
+###########################################################################
+# FALLBACK
+###########################################################################
+
+fallback = element fallback {
+        (inline.content.inner | object)*,
+        
+        fallback.attlist
+}
+
+
+fallback.attlist = 
+        common.attributes,
+        fallback.attlist.extensions
+        
+fallback.attlist.extensions = empty
+        
+
+
+
+###########################################################################
+# REFERENCE
+###########################################################################
+
+reference = element reference {
+    (inline.content | citation)*,
+
+    reference.attlist
+}
+
+reference.attlist =
+    common.attributes,
+    reference.class.attribute,
+    reference.href.attribute,
+    reference.print-url.attribute,
+    reference.attlist.extensions
+    
+
+reference.class.attribute =     standard.class
+reference.href.attribute =      attribute href { xsd:anyURI }?
+reference.print-url.attribute = attribute print-url { xsd:boolean }?
+
+reference.attlist.extensions = empty
+
+
+
+
+###########################################################################
+# CITATION
+###########################################################################
+
+citation = element citation {
+    inline.content,
+
+    citation.attlist
+}
+
+
+citation.attlist =
+    common.attributes,
+    citation.attlist.extensions
+
+        
+citation.attlist.extensions = empty
+
+
+
+###########################################################################
+# PHRASE
+###########################################################################
+
+phrase = element phrase {
+    inline.content,
+    
+    phrase.attlist
+}
+
+
+phrase.attlist =
+        common.attributes,
+        phrase.class.attribute,
+        phrase.attlist.extensions
+
+
+phrase.class.attribute =    standard.class            
+phrase.attlist.extensions = empty
+
+
+
+###########################################################################
+# CONDITIONAL
+###########################################################################
+
+conditional = element conditional {
+    inline.content,
+    
+    conditional.attlist
+}
+
+
+conditional.attlist =
+        common.attributes,
+        conditional.attributes,
+        conditional.attlist.extensions
+
+
+conditional.attlist.extensions = empty
+
+
+
+###########################################################################
+# EM (EMPAHSIS)
+###########################################################################
+
+em = element em {
+    inline.content,
+    
+    em.attlist
+}
+
+em.attlist =
+        common.attributes,
+        em.class.attribute,
+        em.attlist.extensions
+
+em.class.attribute =    standard.class
+em.attlist.extensions = empty
+
+
+
+###########################################################################
+# STATUTORY-EM (STATUTORY EMPAHSIS)
+############################################################################
+
+statutory-em = element statutory-em {
+    inline.content,
+    
+    statutory-em.attlist
+}
+
+statutory-em.attlist =
+        common.attributes,
+        statutory-em.class.attribute,
+        statutory-em.attlist.extensions
+
+statutory-em.class.attribute =    standard.class
+statutory-em.attlist.extensions = empty
+
+
+
+
+###########################################################################
+# STRIKE (STRIKETHROUGH)
+###########################################################################
+
+strike = element strike {
+    inline.content,
+
+    strike.attlist
+}
+
+strike.attlist = 
+    common.attributes,
+    strike.attlist.extensions
+    
+strike.attlist.extensions = empty
+
+
+
+###########################################################################
+# SUB (SUBSCRIPT)
+###########################################################################
+
+sub = element sub {
+    inline.content,
+
+    sub.attlist
+}
+
+sub.attlist =
+    common.attributes,
+    sub.attlist.extensions
+    
+sub.attlist.extensions = empty
+    
+
+
+
+###########################################################################
+# SUP (SUPERSCRIPT)
+###########################################################################
+
+sup = element sup {
+    inline.content,
+
+    sup.attlist
+}
+
+sup.attlist = 
+    common.attributes,
+    sup.attlist.extensions
+
+sup.attlist.extensions = empty
+
+
+
+###########################################################################
+# TABLE
+###########################################################################
+
+table = element table {
+    title?, tgroup+,
+
+    table.attlist
+}
+
+table.attlist = 
+    common.attributes,
+    orient.attribute,
+    [a:defaultValue = "all"]
+    attribute frame { "top" | "bottom" | "topbot" | "all" | "sides" | "none" }?,
+    attribute colsep { xsd:boolean }?,
+    attribute rowsep { xsd:boolean }?,
+    attribute pgwide { xsd:boolean }?,
+    table.attlist.extensions
+
+table.attlist.extensions = empty
+
+
+
+###########################################################################
+# TGROUP
+###########################################################################
+
+tgroup = element tgroup {
+    colspec*, thead?, tbody,
+
+    tgroup.attlist
+}
+
+tgroup.attlist = 
+    common.attributes,
+    attribute cols     { xsd:NMTOKEN },
+    [a:defaultValue = "1"]
+    attribute colsep   { xsd:boolean }?,
+    [a:defaultValue = "1"]
+    attribute rowsep   { xsd:boolean }?,
+    [a:defaultValue = "left"]
+    attribute align    { TableAlign }?,
+    tgroup.attlist.extensions
+
+tgroup.attlist.extensions = empty
+
+
+
+###########################################################################
+# COLSPEC
+###########################################################################
+
+colspec = element colspec {
+    empty,
+
+    colspec.attlist
+}
+
+colspec.attlist = 
+    common.attributes,
+    attribute colnum      { xsd:NMTOKEN }?,
+    attribute colname     { xsd:NMTOKEN }?,
+    attribute colwidth    { xsd:string }?,
+    attribute colsep      { xsd:boolean }?,
+    attribute rowsep      { xsd:boolean }?,
+    attribute align       { TableAlign }?,
+    colspec.attlist.extensions
+
+colspec.attlist.extensions = empty                
+
+
+
+###########################################################################
+# THEAD
+###########################################################################
+
+thead = element thead {
+    row+,
+
+    thead.attlist
+}
+
+thead.attlist = 
+    common.attributes,
+    [a:defaultValue = "middle"]
+    attribute valign  { TableValign }?,
+    thead.attlist.extensions
+
+thead.attlist.extensions = empty
+
+
+
+###########################################################################
+# TBODY
+###########################################################################
+
+tbody = element tbody {
+    row+,
+
+    tbody.attlist
+}
+
+tbody.attlist =
+    common.attributes,
+    [a:defaultValue = "middle"]
+    attribute valign  { TableValign }?,
+    tbody.attlist.extensions
+
+
+tbody.attlist.extensions = empty
+
+
+
+###########################################################################
+# ROW
+###########################################################################
+
+row = element row {
+    entry+,
+
+    row.attlist
+}
+
+row.attlist =
+    common.attributes,
+    attribute rowsep  { xsd:boolean }?,
+    attribute valign  { TableValign }?,
+    row.attlist.extensions
+
+row.attlist.extensions = empty
+
+
+
+###########################################################################
+# ENTRY
+###########################################################################
+
+entry = element entry {
+    entry.model,
+
+    entry.attlist
+}
+
+entry.elements = block | item.reuse.model | inclusion | signature-line
+entry.model = (entry.elements)*
+
+entry.attlist = 
+    common.attributes,
+    attribute colname    { xsd:NMTOKEN }?,
+    attribute namest     { xsd:NMTOKEN }?,
+    attribute nameend    { xsd:NMTOKEN }?,
+    [a:defaultValue = "0"]
+    attribute morerows   { xsd:NMTOKEN }?,
+    attribute colsep     { xsd:boolean }?,
+    attribute rowsep     { xsd:boolean }?,
+    attribute align      { TableAlign }?,
+    attribute valign     { TableValign }?,
+    entry.numbering.attributes,            
+    entry.attlist.extensions
+
+
+entry.numbering.attributes =    empty 
+entry.attlist.extensions =      empty
+
+
+
+###########################################################################
+# TABLE ALIGNMENT PATTERNS
+###########################################################################
+
+TableValign = "top" | "middle" | "bottom"
+
+TableAlign = "left" | "right" | "center" | "justify"
+
+
+
+###########################################################################
+# PARTY SIGNATURE 
+###########################################################################
+
+party-signature = element party-signature {
+
+    (block*, ( signatory-group | signatory-record ), block*),
+    
+    party-signature.attlist
+}
+
+
+party-signature.attlist =
+    common.attributes,    
+    party-signature.layout.attribute,
+    party-signature.party-id.attribute,
+    party-signature.attlist.extensions
+
+    
+party-signature.layout.attribute =        
+    [a:defaultValue = "from-left"]
+    attribute layout { party-signature.layout.values }?
+    
+party-signature.layout.values = "right-column-only" | "from-left"        
+
+party-signature.party-id.attribute = attribute party-id { xsd:string }?
+party-signature.attlist.extensions = empty    
+
+
+
+###########################################################################
+# SIGNATORY-GROUP 
+###########################################################################
+
+signatory-group = element signatory-group    {
+
+    (block*, signatory-record+),
+    
+    signatory-group.attlist
+}        
+
+
+signatory-group.attlist =
+    common.attributes,
+    signatory-group.align-records.attribute,
+    signatory-group.brace.attribute,
+    signatory-group.attlist.extensions
+    
+    
+signatory-group.align-records.attribute =
+    attribute align-records { signatory-group.align-records.values }?
+    
+signatory-group.align-records.values = "horizontal" | "vertical"
+
+signatory-group.brace.attribute =
+    attribute brace  { signatory-group.brace.values }?
+
+signatory-group.brace.values = "block-only"        
+
+signatory-group.attlist.extensions = empty
+
+
+
+###########################################################################
+# SIGNATORY-RECORD
+###########################################################################
+
+signatory-record = element signatory-record  {
+    
+    (block*, 
+        (signatory-record | 
+            ((signatory+, witness*) | (witness+, signatory))
+        ),
+    block*),
+            
+    signatory-record.attlist
+}
+
+
+signatory-record.attlist = 
+    common.attributes,    
+    signatory-record.align-signatory-witness.attribute,
+    signatory-record.brace.attribute,
+    signatory-record.attlist.extensions
+    
+    
+signatory-record.align-signatory-witness.attribute =
+    attribute align-signatory-witness { align-signatory-witness.values }?
+    
+align-signatory-witness.values = "horizontal" | "vertical"
+    
+signatory-record.brace.attribute =
+    attribute brace { brace.values }?
+    
+brace.values = "block-only"
+
+signatory-record.attlist.extensions = empty
+
+
+
+
+###########################################################################
+# SIGNATORY
+###########################################################################
+
+signatory = element signatory {
+
+    (signature-line | block)*,
+
+    signatory.attlist
+}
+
+signatory.attlist =
+    common.attributes,
+    signatory.person-record-id.attribute,
+    signatory.attlist.extensions
+    
+    
+signatory.person-record-id.attribute = attribute person-record-id { xsd:string }?    
+signatory.attlist.extensions = empty
+    
+
+
+###########################################################################
+# WITNESS
+###########################################################################
+
+witness = element witness {
+
+    (signature-line | block)*,
+    
+    witness.attlist
+}    
+
+witness.attlist =
+    common.attributes,
+    witness.attlist.extensions
+    
+witness.attlist.extensions = empty        
+
+
+
+###########################################################################
+# SIGNATURE-LINE
+###########################################################################
+
+signature-line = element signature-line { 
+
+   (\text* & field )*,
+
+    signature-line.attlist
+}
+
+signature-line.attlist =
+    common.attributes,
+    signature-line.attlist.extensions
+    
+signature-line.attlist.extensions = empty        
+
+    
+
+
+###########################################################################
+# DOCUMENT STRUCTURE CONTENT MODEL PATTERNS
+###########################################################################
+
+
+## Tight structure model
+tight.structure.model = inclusion*, 
+                ((block, inclusion*)+ | (item.reuse.model+, inclusion*))?
+
+
+
+## Standard structure model
+standard.structure.model = inclusion*, (block, inclusion*)*,
+                 (item.reuse.model+, inclusion*)
+
+
+## Loose structure model
+loose.structure.model = (block | inclusion | item.reuse.model)*
+
+
+
+
+###########################################################################
+# TEXT LEVEL AND INLINE CONTENT PATTERNS
+###########################################################################
+
+
+inline.content = (inline.content.inner)*
+inline.content.inner = text | reference | em | statutory-em | strike | sub | sup | field 
+
+
+text.content = (text.content.inner)*
+text.content.inner = inline.content.inner | object | term | phrase | note | note-in-line 
+                        | name | address | date | party | person-record
+
+
+
+
+
+###########################################################################
+# STANDARD ATTRIBUTE DEFINITIONS
+###########################################################################
+
+div {
+
+
+    #######################################################################
+    # COMMON ATTRIBUTES PATTERN
+    #######################################################################
+
+    common.attributes =
+            id.attributes
+
+
+
+    #######################################################################
+    # ID ATTRIBUTE
+    #######################################################################
+
+    id.attributes =
+        attribute id { xsd:ID }?
+
+
+
+    #######################################################################
+    # CLASS ATTRIBUTE
+    #######################################################################
+
+    standard.class = attribute class { xsd:string }?
+
+
+    #######################################################################
+    # NUMBER ATTRIBUTE
+    #######################################################################
+
+    common.number.attribute = attribute number { xsd:string }?
+
+
+
+
+    #######################################################################
+    # CONDITIONAL ATTRIBUTES PATTERN
+    #######################################################################
+    
+    conditional.attributes = empty
+
+
+
+    #######################################################################
+    # CONDITION ATTRIBUTE
+    #######################################################################
+
+    condition.attribute = attribute condition { xsd:string }?
+    
+
+
+    #######################################################################
+    # STOP-CONTENTS ATTRIBUTE
+    #######################################################################
+
+    stop-contents.attribute = attribute stop-contents { "below" }?
+
+
+
+    #######################################################################
+    # ORIENT ATTRIBUTE
+    #######################################################################
+
+    orient.attribute = attribute orient {"portrait" | "landscape" }?
+
+
+}
+
+
+###########################################################################
+# STANDARD TYPE DEFINITIONS
+###########################################################################
+
+div {
+
+    #######################################################################
+    # SHORTALIGNMENT
+    #######################################################################
+
+    ShortAlignment = "left" | "center" | "right"
+
+
+    #######################################################################
+    # LONGALIGNMENT
+    #######################################################################
+
+    LongAlignment = "left" | "center" | "right" | "justify"
+
+}
+    
+    
+    
+}
+

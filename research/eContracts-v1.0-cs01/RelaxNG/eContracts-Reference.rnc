@@ -1,0 +1,160 @@
+default namespace ec = "urn:oasis:names:tc:eContracts:1:0"
+namespace xs = "http://www.w3.org/2001/XMLSchema"
+namespace xi = "http://www.w3.org/2001/XInclude"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+###########################################################################
+#
+# COPYRIGHT
+# The eContracts Reference Schema is Copyright 2006, OASIS Open 
+# All Rights Reserved.
+#
+# The eContracts Reference Schema is derived from the BNML Standard Schema.
+# The BNML Standard Schema is Copyright 2000-2005, Elkera Pty Limited.
+# All Rights Reserved.
+#
+# The copyright holders grant an unlimited perpetual, non-exclusive, 
+# royalty-free, world-wide right and license to copy, publish and 
+# distribute the eContracts Schema in any way, and to prepare 
+# derivative works that are based on or incorporate all or part of the 
+# eContracts Reference Schema.
+#
+# The copyright holders make no representation about the suitability of 
+# the eContracts Reference Schema for any purpose. It is provided 
+#  "as is" without express or implied warranty.
+#
+# If you create a derivative work in any way from the eContracts 
+# Reference Schema, you must rename the schema files in accordance 
+# with the Customization guidelines in the eContracts Specification at:
+#
+# http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=legalxml-econtracts.
+#
+# If your derivative work is not a subset or variant under the eContracts 
+# Specification, you may not use "eContracts" in the name of your 
+# derivative work.
+#
+#
+# The eContracts-Reference.rnc file is the main file that defines the 
+# eContracts Reference schema. This is an umbrella file for the schema that 
+# serves two purposes:
+#
+#          (a) it contains statements to include the other files that 
+#              provide element definitions for all elements found in  
+#              the eContracts schema. 
+#
+#          (b) it can be used to make customizations to the eContracts 
+#              schema by changing the content patterns that are defined 
+#              in the other schema files.
+#
+#
+# VERSION HISTORY
+#
+# OASIS Technical Commitee Specification 1.0, 27 April 2007
+#
+###########################################################################
+
+
+
+grammar {
+
+
+
+###########################################################################
+# DUBLIN CORE METADATA
+#
+# This section includes Dublin core metadata elements into the application.
+#
+###########################################################################
+
+include "dc-metadata.rnc"
+
+
+###########################################################################
+# INCLUDE eCONTRACTS CORE
+#
+# This statement includes the core eContracts element definitions into 
+# the application. 
+#
+###########################################################################
+
+include "eContracts-core.rnc" {
+
+
+    #######################################################################
+    # ACTIVATE DUBLIN CORE METADATA
+    #######################################################################
+    metadata.content &= dc.metadata.content
+
+}
+
+
+
+
+###########################################################################
+# ACTIVATE CONDITIONAL TEXT
+###########################################################################
+
+div {
+
+    # add the condition attribute to all eContract elements.
+    conditional.attributes &= condition.attribute
+    inline.content.inner |= conditional
+
+    # add the conditions structure to the metadata element    
+    metadata.content &=   
+
+        # define the conditions element and its children
+        element conditions {
+            
+            element condition {
+                text,
+
+                attribute name { xsd:string },
+                attribute default { xsd:boolean }?
+            }+    
+        }?
+
+}
+
+
+###########################################################################
+# ACTIVATE CONTENT RE-USE
+###########################################################################
+
+div {
+
+    include "xi-include.rnc"
+    item.reuse.model |= xiInclude
+    block.level.elements |= xiInclude
+
+}
+
+    
+###########################################################################
+# WAI COMPATIBILITY OPTIONS
+###########################################################################
+
+div {
+    
+    # PRIORITY 1 additions
+    common.attributes &= attribute xml:lang { xsd:string }? 
+    entry.attlist &= attribute is-row-header {xsd:boolean}?
+    
+    # PRIORITY 3 additions
+    term.attlist &= attribute abbreviation { xsd:string }? 
+    reference.attlist &= attribute destination-type { xsd:string }? 
+    reference.attlist &= attribute destination-lang { xsd:string }? 
+    table.attlist &= attribute summary { xsd:string }? 
+    table.attlist &= attribute title { xsd:string }? 
+    entry.attlist &= attribute abbreviation { xsd:string }? 
+    
+    
+
+}
+    
+    
+    
+}
+

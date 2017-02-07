@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/XML/1998/namespace" xmlns:ec="urn:oasis:names:tc:eContracts:1:0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="dc-metadata.xsd"/>
+  <xs:import namespace="http://www.w3.org/2001/XInclude" schemaLocation="xi-include.xsd"/>
+  <xs:import namespace="urn:oasis:names:tc:eContracts:1:0" schemaLocation="eContracts-Reference.xsd"/>
+  <xs:attribute name="space">
+    <xs:simpleType>
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="default"/>
+        <xs:enumeration value="preserve"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:attribute>
+  <xs:attribute name="lang" type="xs:string"/>
+</xs:schema>

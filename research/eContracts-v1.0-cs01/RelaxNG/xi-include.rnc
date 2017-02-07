@@ -1,0 +1,49 @@
+namespace xi = "http://www.w3.org/2001/XInclude"
+namespace xsi = "http://www.w3.org/2001/XMLSchema-instance"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+namespace xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+
+###########################################################################
+#
+# This file is part of the OASIS Legal XML eContracts schema 1.0. 
+#
+# This xi-include.rnc file provides the xi:include element, which is 
+# defined by the World Wide Web Consortium XML Inclusions 
+# recommendation. This is used in the eContracts schema to provide 
+# for content re-use applications. A full description of this 
+# element can be found at:
+#
+#          http://www.w3.org/TR/2004/PR-xinclude-20040930.
+#
+#
+#
+# VERSION HISTORY
+#
+# OASIS Technical Commitee Specification 1.0, 27 April 2007
+#
+###########################################################################
+
+
+div {
+
+    
+    ## define the include element
+    xiInclude = element xi:include {
+    
+        element xi:fallback {
+        
+            (xiInclude.fallback.model)*
+        
+        }?,
+        attribute href { xsd:anyURI }?,
+        xiInclude.extensions
+    
+    }
+    
+    xiInclude.fallback.model = xiInclude | inline.content.inner
+    xiInclude.extensions = empty
+
+}
+

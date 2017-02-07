@@ -1,0 +1,55 @@
+namespace dc = "http://purl.org/dc/elements/1.1/"
+namespace xs = "http://www.w3.org/2001/XMLSchema"
+namespace a = "http://relaxng.org/ns/compatibility/annotations/1.0"
+datatypes xsd = "http://www.w3.org/2001/XMLSchema-datatypes"
+
+###########################################################################
+#
+# This file is part of the OASIS Legal XML eContracts schema 1.0. 
+#
+# This dc-metadata.rnc file provides elements from the Dublin Core 
+# metadata set. This is used to incorporate a number of basic 
+# metadata elements into the eContracts schema. 
+#
+#
+#
+# VERSION HISTORY
+#
+# OASIS Technical Commitee Specification 1.0, 27 April 2007
+#
+###########################################################################
+
+div {
+
+        ## Override the metadata content.
+        dc.metadata.content = 
+
+            # The following is a limited subset of the Dublin Core element
+            # set. 
+
+            ## The name given to the contract.
+            element dc:title { xsd:string }? &
+
+            ## The name of the creator of the contract.
+            element dc:creator { xsd:string }* &
+
+            ## The subject of the contract.
+            element dc:subject { xsd:string }? &
+
+            ## A short description of the contract.
+            element dc:description { xsd:string }? &
+
+            ## The publisher of the contract.
+            element dc:publisher { xsd:string }? &
+
+            ## A contributor to the contract.
+            element dc:contributor { xsd:string }* &
+
+            ## The date at which this version of the contract was released.
+            element dc:date { xsd:date 
+                { pattern = "[0-9]{4}-[0-9]{2}-[0-9]{2}" } 
+            }? &
+
+            ## A description of the rights of the contract.
+            element dc:rights { xsd:string }?
+}

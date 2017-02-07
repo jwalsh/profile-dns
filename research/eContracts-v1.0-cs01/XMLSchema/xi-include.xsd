@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/2001/XInclude" xmlns:ec="urn:oasis:names:tc:eContracts:1:0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <xs:import namespace="http://purl.org/dc/elements/1.1/" schemaLocation="dc-metadata.xsd"/>
+  <xs:import namespace="http://www.w3.org/XML/1998/namespace" schemaLocation="xml.xsd"/>
+  <xs:import namespace="urn:oasis:names:tc:eContracts:1:0" schemaLocation="eContracts-Reference.xsd"/>
+  <!--
+    
+    This file is part of the OASIS Legal XML eContracts schema 1.0. 
+    
+    This xi-include.rnc file provides the xi:include element, which is 
+    defined by the World Wide Web Consortium XML Inclusions 
+    recommendation. This is used in the eContracts schema to provide 
+    for content re-use applications. A full description of this 
+    element can be found at:
+    
+             http://www.w3.org/TR/2004/PR-xinclude-20040930.
+    
+    
+    
+    VERSION HISTORY
+    
+    OASIS Technical Commitee Specification 1.0, 27 April 2007
+    
+  -->
+  <xs:element name="include">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" ref="xi:fallback"/>
+      </xs:sequence>
+      <xs:attribute name="href" type="xs:anyURI"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fallback">
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="xi:xiInclude.fallback.model"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:group name="xiInclude.fallback.model">
+    <xs:choice>
+      <xs:element ref="xi:include"/>
+      <xs:group ref="ec:inline.content.inner"/>
+    </xs:choice>
+  </xs:group>
+</xs:schema>

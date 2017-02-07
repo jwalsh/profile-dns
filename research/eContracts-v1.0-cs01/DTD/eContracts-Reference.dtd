@@ -1,0 +1,960 @@
+<!--
+##########################################################################
+##
+## COPYRIGHT
+## The eContracts Reference DTD is Copyright 2006, OASIS Open 
+## All Rights Reserved.
+##
+## The eContracts Reference DTD is derived from the BNML Standard Schema.
+## The BNML Standard Schema is Copyright 2000-2005, Elkera Pty Limited.
+## All Rights Reserved.
+##
+## The copyright holders grant an unlimited perpetual, non-exclusive, 
+## royalty-free, world-wide right and license to copy, publish and 
+## distribute the eContracts DTD in any way, and to prepare 
+## derivative works that are based on or incorporate all or part of the 
+## eContracts Reference DTD.
+##
+## The copyright holders make no representation about the suitability of 
+## the eContracts Reference DTD for any purpose. It is provided 
+##  "as is" without express or implied warranty.
+##
+## If you create a derivative work in any way from the eContracts 
+## Reference DTD, you must rename the schema files in accordance 
+## with the Customization guidelines in the eContracts Specification at:
+##
+## http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=legalxml-econtracts.
+##
+## If your derivative work is not a subset or variant under the eContracts 
+## Specification, you may not use "eContracts" in the name of your 
+## derivative work.
+##
+##
+## This file contains the DTD definition of eContracts schema 1.0.
+##
+## This file should be manually maintained separately from the RelaxNG 
+## version of the schema. The RelaxNG version of the schema redefines a 
+## number of elements in certain contexts (see //item within //block). 
+## There is no tool capable of transforming these structures into DTD 
+## format.
+##       
+##
+## VERSION HISTORY
+##
+#  OASIS Technical Commitee Specification 1.0, 27 April 2007
+##
+##########################################################################-->
+
+
+
+<!--
+###########################################################################
+# CONTRACT
+###########################################################################
+-->
+
+<!ELEMENT contract      (metadata?, title, subtitle*, contract-front?, 
+                            body, back?, attachments*)>
+                            
+
+
+<!ATTLIST contract 
+    id              ID              #IMPLIED
+    class           CDATA           #IMPLIED
+    orient  (portrait | landscape)  #IMPLIED
+    xml:lang        CDATA           #IMPLIED
+    
+    xmlns           CDATA   #FIXED  "urn:oasis:names:tc:eContracts:1:0" 
+    xmlns:dc        CDATA   #FIXED  "http://purl.org/dc/elements/1.1/" 
+    xmlns:xi        CDATA   #FIXED  "http://www.w3.org/2001/XInclude"
+
+>            
+
+
+<!--
+############################################################################
+# CONTRACT-FRONT
+###########################################################################-->
+
+<!ELEMENT contract-front    (((date-block?, parties) | block+), 
+                                background?)>
+
+<!ATTLIST contract-front
+    id          ID             #IMPLIED
+    class       CDATA           #IMPLIED
+    xml:lang        CDATA           #IMPLIED
+>
+
+
+
+<!--
+###########################################################################
+# DATE-BLOCK
+###########################################################################-->
+
+<!ELEMENT date-block    (#PCDATA | reference | em | statutory-em | strike | sub 
+                            | sup  | conditional | object | term | phrase | field 
+                            | note | note-in-line | name | address | date | party
+                            | person-record)*>
+                            
+<!ATTLIST date-block
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+
+<!--
+###########################################################################
+# PARTIES
+###########################################################################-->
+
+
+<!ELEMENT parties       (title?, party+)>
+
+<!ATTLIST parties
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED    
+>
+ 
+
+
+<!--
+###########################################################################
+# PARTY
+###########################################################################-->
+
+
+<!ELEMENT party         (#PCDATA | person-record | term)*>
+
+<!ATTLIST party
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED    
+>
+
+
+
+<!--
+###########################################################################
+# PERSON-RECORD
+###########################################################################-->
+
+
+<!ELEMENT person-record         (#PCDATA | name | address | field | term)*>
+
+<!ATTLIST person-record
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    party-id    CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED    
+>
+
+
+
+
+<!--
+###########################################################################
+# BACKGROUND
+###########################################################################-->
+
+<!ELEMENT background    (title?, (item | xi:include)*)>
+
+<!ATTLIST background
+    id              ID          #IMPLIED
+    xml:lang        CDATA       #IMPLIED
+>
+
+
+
+
+<!--
+###########################################################################
+# BODY
+###########################################################################-->
+
+<!ELEMENT body          (title?, (block | inclusion | item | xi:include)*)>
+
+<!ATTLIST body
+    id          ID              #IMPLIED
+    xml:lang        CDATA           #IMPLIED
+>
+
+
+
+<!--
+###########################################################################
+# BACK
+###########################################################################-->
+
+<!ELEMENT back          (title?, (block | inclusion | item | xi:include 
+                            | party-signature | date-block)*)>
+    
+<!ATTLIST back
+    id              ID          #IMPLIED
+    xml:lang        CDATA       #IMPLIED
+>
+
+
+
+
+
+
+<!--
+###########################################################################
+# METADATA
+###########################################################################-->
+
+
+<!ELEMENT metadata      (dc:title?, dc:creator*, dc:subject?, 
+                            dc:description?, dc:publisher?, 
+                            dc:contributor*, dc:date?, dc:rights?,
+                            conditions?)>
+
+<!ATTLIST metadata
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED    
+>    
+
+<!ELEMENT dc:title          (#PCDATA)*>
+<!ELEMENT dc:creator        (#PCDATA)*>
+<!ELEMENT dc:subject        (#PCDATA)*>
+<!ELEMENT dc:description    (#PCDATA)*>
+<!ELEMENT dc:publisher      (#PCDATA)*>
+<!ELEMENT dc:contributor    (#PCDATA)*>
+<!ELEMENT dc:date           (#PCDATA)*>
+<!ELEMENT dc:rights         (#PCDATA)*>
+
+
+<!--
+###########################################################################
+# CONDITIONAL TEXT
+###########################################################################-->
+
+
+
+<!ELEMENT conditions        (condition+)>
+<!ELEMENT condition         (#PCDATA)*>
+<!ATTLIST condition
+    name          CDATA           #REQUIRED
+    default       (true | false)  #IMPLIED
+    xml:lang        CDATA         #IMPLIED    
+>    
+
+
+<!--
+###########################################################################
+# ITEM
+###########################################################################-->
+
+<!ELEMENT item          (metadata?, title?, (block | inclusion 
+                            | item | xi:include)*)>
+
+<!ATTLIST item 
+    id              ID          #IMPLIED
+    class           CDATA       #IMPLIED
+    number          CDATA       #IMPLIED
+    stop-contents   (below)     #IMPLIED
+    condition       CDATA       #IMPLIED
+    xml:lang        CDATA       #IMPLIED    
+>            
+
+
+<!--
+###########################################################################
+# BLOCK
+###########################################################################-->
+
+<!ELEMENT block         (text | definition | table | inclusion | item | xi:include)*>
+
+<!ATTLIST block 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    number-type  (manual | none | disc | line | number
+                 | loweralpha | upperalpha | lowerroman
+                 | upperroman)  #IMPLIED
+    condition   CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>            
+
+
+
+
+<!--
+###########################################################################
+# TEXT
+###########################################################################-->
+
+<!ELEMENT text      (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                        | conditional | object | term | phrase | field | note 
+                        | note-in-line | name | address | date | party 
+                        | person-record)*>
+
+
+
+<!ATTLIST text 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    textflow    (runon)         #IMPLIED
+    xml:space  (default | preserve) "default"
+    xml:lang    CDATA           #IMPLIED
+>            
+
+
+<!--
+###########################################################################
+# INCLUSION
+###########################################################################-->
+
+<!ELEMENT inclusion     (metadata?, title?, (block | inclusion 
+                            | item | xi:include)*)>
+
+<!ATTLIST inclusion 
+    id              ID                      #IMPLIED
+    class           CDATA                   #IMPLIED
+    number          CDATA                   #IMPLIED    
+    align           (left | center | right) #IMPLIED
+    orient          (portrait | landscape)  #IMPLIED
+    xml:lang        CDATA                   #IMPLIED
+>            
+
+
+
+<!--    
+###########################################################################
+# ATTACHMENTS
+###########################################################################-->
+
+<!ELEMENT attachments       (attachment+)>
+
+<!ATTLIST attachments 
+    id              ID          #IMPLIED
+    class           CDATA       #IMPLIED
+    xml:lang        CDATA       #IMPLIED
+>
+
+
+
+<!--    
+###########################################################################
+# ATTACHMENT
+###########################################################################-->
+
+<!ELEMENT attachment       (metadata?, title?, subtitle*, 
+                            (contract | (block | inclusion | item 
+                            | xi:include)*)?)>
+                                                
+                        
+<!ATTLIST attachment 
+    id              ID          #IMPLIED
+    class           CDATA       #IMPLIED
+    number          CDATA       #IMPLIED    
+    orient          (portrait | landscape)  #IMPLIED
+    xml:lang        CDATA       #IMPLIED
+>
+
+
+
+<!--
+###########################################################################
+# TITLE
+###########################################################################-->
+
+<!ELEMENT title     (text+)>
+
+<!ATTLIST title 
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+        
+<!--        
+###########################################################################
+# SUBTITLE
+###########################################################################-->
+
+<!ELEMENT subtitle      (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                            | field | conditional)*>
+
+<!ATTLIST subtitle 
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+        
+<!--
+###########################################################################
+# DEFINITION
+###########################################################################-->
+
+<!ELEMENT definition    ((term | terms), block+)>
+    
+<!ATTLIST definition 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# TERMS
+###########################################################################-->
+
+<!ELEMENT terms         (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                            | field | conditional | term)*>
+    
+<!ATTLIST terms 
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+    
+
+
+<!--
+###########################################################################
+# TERM
+###########################################################################-->
+
+<!ELEMENT term          (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                            | field | conditional)*>
+
+<!ATTLIST term 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    abbreviation CDATA          #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# NAME
+###########################################################################-->
+
+<!ELEMENT name          (#PCDATA | reference | em | statutory-em | strike | sub 
+                            | sup | conditional | field)*>
+    
+<!ATTLIST name 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# ADDRESS
+###########################################################################-->
+
+<!ELEMENT address       (#PCDATA | reference | em | statutory-em | strike | sub 
+                            | sup | conditional | field)*>
+    
+<!ATTLIST address 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# DATE
+###########################################################################-->
+
+
+<!ELEMENT date          (#PCDATA | reference | em | statutory-em | strike | sub 
+                            | sup | conditional | field)*>
+        
+<!ATTLIST date 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# NOTE
+###########################################################################-->
+
+<!ELEMENT note          (block+)>
+    
+<!ATTLIST note 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    number      CDATA           #IMPLIED    
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# NOTE-IN-LINE
+###########################################################################-->
+
+<!ELEMENT note-in-line  (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                            | field | conditional)*>
+
+<!ATTLIST note-in-line 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# FIELD
+###########################################################################-->
+
+<!ELEMENT field         (#PCDATA)>
+
+<!ATTLIST field 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    label       CDATA           #IMPLIED
+    name        CDATA           #IMPLIED
+    type        CDATA           #IMPLIED
+    source      CDATA           #IMPLIED
+    action      CDATA           #IMPLIED
+    length      CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# OBJECT
+###########################################################################-->
+
+<!ELEMENT object        (data, fallback)>
+    
+<!ATTLIST object 
+    id          ID              #IMPLIED
+    type        CDATA           #IMPLIED
+    scale       CDATA           #IMPLIED
+    rotate      CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# DATA
+###########################################################################-->
+
+<!ELEMENT data          EMPTY>
+
+<!ATTLIST data 
+    id          ID              #IMPLIED
+    src         CDATA           #IMPLIED
+    height      CDATA           #IMPLIED
+    width       CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+
+<!--
+###########################################################################
+# FALLBACK
+###########################################################################-->
+
+<!ELEMENT fallback      (#PCDATA | reference | em | statutory-em | strike 
+                            | sub | sup | field | conditional | object)*>
+
+
+<!ATTLIST fallback 
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+       
+
+
+<!--
+###########################################################################
+# REFERENCE
+###########################################################################-->
+
+<!ELEMENT reference     (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                            | field | conditional | citation)*>
+                        
+<!ATTLIST reference 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    href        CDATA           #IMPLIED
+    print-url  (true|false)     #IMPLIED
+    destination-type CDATA      #IMPLIED
+    destination-lang CDATA      #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# CITATION
+###########################################################################-->
+
+<!ELEMENT citation      (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                            | field | conditional)*>
+
+<!ATTLIST citation 
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# PHRASE
+###########################################################################-->
+
+<!ELEMENT phrase       (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                            | field | conditional)*>
+
+<!ATTLIST phrase 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+
+<!--
+###########################################################################
+# CONDITIONAL
+###########################################################################-->
+
+<!ELEMENT conditional   (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                            | field | conditional)*>
+
+<!ATTLIST conditional 
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# EM (EMPAHSIS)
+###########################################################################-->
+
+<!ELEMENT em            (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                            | field | conditional)*>
+
+<!ATTLIST em 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+
+<!--
+###########################################################################
+# STATUTORY-EM (STATUTORY EMPAHSIS)
+###########################################################################-->
+
+<!ELEMENT statutory-em      (#PCDATA | reference | em | statutory-em | strike 
+                                | sub | sup | field | conditional)*>
+
+<!ATTLIST statutory-em 
+    id          ID              #IMPLIED
+    class       CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+
+
+
+<!--
+###########################################################################
+# STRIKE (STRIKETHROUGH)
+###########################################################################-->
+
+<!ELEMENT strike        (#PCDATA | reference | em | statutory-em | strike 
+                            | sub | sup | field | conditional)*>
+
+<!ATTLIST strike 
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+
+<!--
+###########################################################################
+# SUB (SUBSCRIPT)
+###########################################################################-->
+
+<!ELEMENT sub           (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                            | field | conditional)*>
+
+<!ATTLIST sub 
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+    
+
+
+<!--
+###########################################################################
+# SUP (SUPERSCRIPT)
+###########################################################################-->
+
+
+<!ELEMENT sup           (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                            | field | conditional)*>
+
+<!ATTLIST sup 
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# TABLE
+###########################################################################-->
+
+<!ELEMENT table         (title?, tgroup+)>
+
+<!ATTLIST table 
+    id          ID              #IMPLIED
+    orient      (portrait | landscape)  #IMPLIED
+    frame       (top | bottom | topbot | all | sides | none)  "all"
+    colsep      NMTOKEN         #IMPLIED
+    rowsep      NMTOKEN         #IMPLIED
+    pgwide      NMTOKEN         #IMPLIED
+    summary     CDATA           #IMPLIED
+    title       CDATA           #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+    
+>
+
+<!--
+###########################################################################
+# TGROUP
+###########################################################################-->
+
+<!ELEMENT tgroup        (colspec*, thead?, tbody)>
+
+<!ATTLIST tgroup 
+    id          ID              #IMPLIED
+    cols        NMTOKEN         #REQUIRED
+    colsep      NMTOKEN         "1"
+    rowsep      NMTOKEN         "1"
+    align       (left | right | center | justify)   "left"
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+
+<!--
+###########################################################################
+# COLSPEC
+###########################################################################-->
+
+<!ELEMENT colspec       EMPTY>
+
+<!ATTLIST colspec 
+    id          ID              #IMPLIED
+    colnum      NMTOKEN         #IMPLIED
+    colname     NMTOKEN         #IMPLIED
+    colwidth    CDATA           #IMPLIED
+    colsep      NMTOKEN         #IMPLIED
+    rowsep      NMTOKEN         #IMPLIED
+    align       (left | right | center | justify)   #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# THEAD
+###########################################################################-->
+
+<!ELEMENT thead         (row+)>
+
+<!ATTLIST thead 
+    id          ID              #IMPLIED
+    valign      (top | middle | bottom)     "middle"
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# TBODY
+###########################################################################-->
+
+<!ELEMENT tbody         (row+)>
+
+<!ATTLIST tbody 
+    id          ID              #IMPLIED
+    valign      (top | middle | bottom)     "middle"
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+<!--
+###########################################################################
+# ROW
+###########################################################################-->
+
+<!ELEMENT row           (entry+)>
+
+<!ATTLIST row 
+    id          ID              #IMPLIED
+    rowsep      NMTOKEN         #IMPLIED
+    valign      (top | middle | bottom)   #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+
+<!--
+###########################################################################
+# ENTRY
+###########################################################################-->
+
+
+<!ELEMENT entry         (block | item | xi:include | inclusion 
+                            | signature-line)*>
+
+<!ATTLIST entry
+    id          ID              #IMPLIED
+    colname     NMTOKEN         #IMPLIED
+    namest      NMTOKEN         #IMPLIED
+    nameend     NMTOKEN         #IMPLIED
+    morerows    NMTOKEN         "0"
+    colsep      NMTOKEN         #IMPLIED
+    rowsep      NMTOKEN         #IMPLIED
+    align       (left | right | center | justify)   #IMPLIED
+    valign      (top | middle | bottom)     #IMPLIED
+    is-row-header (true|false)  #IMPLIED
+    abbreviation CDATA          #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>
+
+
+
+<!--
+###########################################################################
+# PARTY SIGNATURE 
+###########################################################################-->
+
+<!ELEMENT party-signature   (block*, 
+                                ( signatory-group | signatory-record ), 
+                                block*)>
+    
+<!ATTLIST party-signature
+    id          ID            #IMPLIED
+    layout  (right-column-only | from-left)     "from-left"
+    party-id    CDATA         #IMPLIED
+    xml:lang    CDATA         #IMPLIED
+>    
+
+
+<!--
+###########################################################################
+# SIGNATORY-GROUP 
+###########################################################################-->
+
+<!ELEMENT signatory-group    (block*, signatory-record+)>
+
+<!ATTLIST signatory-group
+    id          ID              #IMPLIED
+    align-records (horizontal | vertical)     #IMPLIED
+    brace       (block-only)    #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>    
+
+
+
+<!--
+###########################################################################
+# SIGNATORY-RECORD
+###########################################################################-->
+
+<!ELEMENT signatory-record  (block*, (signatory-record | 
+                                ((signatory+, witness*) | 
+                                (witness+, signatory))),block*)>
+                                
+ 
+<!ATTLIST signatory-record
+    id          ID              #IMPLIED
+    align-signatory-witness  (horizontal | vertical)     #IMPLIED
+    brace       (block-only)    #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>    
+ 
+
+
+
+<!--
+###########################################################################
+# SIGNATORY
+###########################################################################-->
+
+<!ELEMENT signatory         (signature-line | block)*>
+
+<!ATTLIST signatory
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+    person-record-id  CDATA     #IMPLIED
+>    
+
+    
+
+<!--
+###########################################################################
+# WITNESS
+###########################################################################-->
+
+<!ELEMENT witness           (signature-line | block)*>
+    
+<!ATTLIST witness
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>    
+
+
+
+<!--
+###########################################################################
+# SIGNATURE-LINE
+###########################################################################-->
+
+<!ELEMENT signature-line    (text | field )*>
+
+<!ATTLIST signature-line
+    id          ID              #IMPLIED
+    xml:lang    CDATA           #IMPLIED
+>    
+
+
+
+<!--
+###########################################################################
+# XI:INCLUDE
+###########################################################################-->
+
+
+<!ELEMENT xi:include        (xi:fallback?)>
+
+<!ATTLIST xi:include
+    href            CDATA       #IMPLIED
+>
+
+<!ELEMENT xi:fallback       (#PCDATA | reference | em | statutory-em | strike | sub | sup 
+                                | field | conditional | xi:include)*>
+
+    
+
+
