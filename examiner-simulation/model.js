@@ -111,10 +111,26 @@ var step = function(next) {
   return next[0];
 };
 
-var start = $.MEMBER.APPLICATION;
-var action = start;
-while (action.next) {
-  console.log(action);
-  var s = action.next[0].split('.');
-  action = $[s[0]][s[1]];
+var trials = 4;
+
+for (var t = 0; t  < trials; t++) {
+  var start = $.MEMBER.APPLICATION;
+  var action = start;
+  console.log('*** SIMULATION ' + t + ' ***');
+  while (true) {
+    if(!action.next) {
+      console.log('*** Loan application completed ***');
+      break;
+    }
+    var threshold = Math.random();
+    var accept = action.accept;
+    // console.log(accept,threshold);
+    if(accept < threshold) {
+      console.log('*** Loan application terminated as not acceptable ***');
+      break;
+    }
+    console.log(action);
+    var s = action.next[0].split('.');
+    action = $[s[0]][s[1]];
+  }
 }
