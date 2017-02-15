@@ -118,6 +118,7 @@ for (var t = 0; t  < trials; t++) {
   var action = start;
   console.log('*** SIMULATION ' + t + ' ***');
   while (true) {
+    console.log(action);
     if(!action.next) {
       console.log('*** Loan application completed ***');
       break;
@@ -129,7 +130,6 @@ for (var t = 0; t  < trials; t++) {
       console.log('*** Loan application terminated as not acceptable ***');
       break;
     }
-    console.log(action);
     var s = action.next[0].split('.');
     action = $[s[0]][s[1]];
   }
