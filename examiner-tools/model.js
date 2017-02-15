@@ -5,7 +5,13 @@ var _ = loanEntityStates = {
   MEMBER: {
     APPLICATION: {
       description: 'Create loan application',
-      accept: 100,
+      accept: 1,
+      days: 0,
+      next: [_.MORTGAGE_ADMINISTRATOR.VET_LOAN]
+    },
+    FEEDBACK: {
+      description: 'Give feedback  loan application',
+      accept: 1,
       days: 0,
       next: [_.MORTGAGE_ADMINISTRATOR.VET_LOAN]
     }
@@ -25,12 +31,12 @@ var _ = loanEntityStates = {
       description: 'Mortgage processor reviews dashboard with new loan',
       accept: 1,
       days: 1,
-      next: [_.MORTGAGE_PROCESSOR.ACCEPT_LOAN]
+      next: [_.MORTGAGE_PROCESSOR.ACCEPT_LOAN, _.MEMBER.FEEDBACK]
     },
     ACCEPT_LOAN: {
       description: 'Mortgage processor vets loan application: ACCEPT: 90%',
       accept: .9,
-      days: 0,
+      days: 1.5,
       next: [_.MORTGAGE_PROCESSOR.LOAN_ESTIMATE]
     },
     LOAN_ESTIMATE: {
@@ -38,6 +44,12 @@ var _ = loanEntityStates = {
       accept: 1,
       days: 0,
       next: [_.APPRAISER.REQUEST, _.TITLE_EXAMINER.REQUEST]
+    },
+    PROMISSORY_NOTE: {
+      description: 'Create terms of the agreement ',
+      accept: .8,
+      days: 0,
+      next: [_.LENDER.PROMISSORY_NOTE]
     }
   },
 
@@ -53,7 +65,6 @@ var _ = loanEntityStates = {
       accept: .1,
       days: 0,
       next: [_.APPRAISER.HOLD_NOTIFICATION]
-
     },
     HOLD_NOTIFICATION: {
       description: 'Notify the mortgage processor of held loan: NOTIFY: 100%',
@@ -66,7 +77,6 @@ var _ = loanEntityStates = {
       accept: 1,
       days: 2
     }
-
   },
 
   TITLE_EXAMINER: {
