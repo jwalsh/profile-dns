@@ -1,0 +1,14 @@
+{
+  "name": "@jwalsh/blockstack-tools",
+  "version": "1.0.0",
+  "description": "Blockstack Tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "openpgp": "^2.3.7"
+  }
+}
