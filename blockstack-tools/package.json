@@ -9,8 +9,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "crypto": "0.0.3",
+    "eccrypto": "^1.0.3",
     "elliptic": "^6.4.0",
-    "openpgp": "^2.3.7"
+    "openpgp": "^2.3.7",
+    "secp256k1": "^3.2.5"
   },
   "devDependencies": {
     "babel-cli": "^6.23.0"
