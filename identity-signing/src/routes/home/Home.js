@@ -11,7 +11,6 @@ import React, { PropTypes } from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Home.css';
 import Document from '../../components/Document/index';
-console.log(Document)
 
 class Home extends React.Component {
   static propTypes = {
@@ -26,14 +25,36 @@ class Home extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.showPrivate = this.showPrivate.bind(this);
+    this.hidePrivate = this.hidePrivate.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+
     this.state = {
       identity: {
         name: 'Jason Walsh',
         public: '033927f487c1c648b7bbcdcf5f02b3c25128e3727ec66cf50954753c4f73c0a877',
         private: '0123456789abcdef0123456789abcdef0123456789abcdefff0123456789abcdef'.split('').map((v,i,a) => { return i>80 ? null : a[Math.floor(Math.random()*16)] }).join(''),
-        hidePrivate: false,
+        showPrivate: true,
       }
     }
+  }
+
+  hidePrivate(e) {
+    console.log(e)
+    this.setState({identity: {showPrivate: false}})
+  }
+
+  showPrivate(e) {
+    console.log(e)
+    this.setState({identity: {showPrivate: true}})
+  }
+
+  handleClick() {
+    console.log('click')
+    this.setState(prevState => ({
+      isToggleOn: !prevState.isToggleOn
+    }));
   }
 
   render() {
@@ -46,12 +67,13 @@ class Home extends React.Component {
         <h2>Public Key</h2>
         <tt>{this.state.identity.public}</tt>
         <h2>Private Key</h2>
-        <tt>{this.state.identity.private}</tt>
+        <tt>{this.state.identity.showPrivate ? this.state.identity.private : '**********************************' }</tt>
+        {this.state.identity.showPrivate ? <button onClick={this.hidePrivate}>hide</button> : <button onClick={this.showPrivate}>show</button>}
           <h1>Documents</h1>
           <h2>In Progress</h2>
         {this.props.documents.filter(item => !item.signed).map(item => (
             <li key={item.link} className={s.newsItem}>
-              <b className={s.newsTitle}><a href={item.link}>{item.title}</a> {!item.signed ? '*' : ''}</b>
+              <b className={s.newsTitle}><a href={item.link}>{item.title}</a> </b>
             <button>Sign</button>
             <button>Reject</button>
               <blockquote>
@@ -64,7 +86,7 @@ class Home extends React.Component {
         {this.props.documents.filter(item => item.signed).map(item => (
 
             <li key={item.link} className={s.newsItem}>
-              <b className={s.newsTitle}><a href={item.link}>{item.title}</a> {!item.signed ? '*' : ''}</b>
+              <b className={s.newsTitle}><a href={item.link}>{item.title}</a> </b>
             <button>Sign</button>
             <button>Reject</button>
               <blockquote>
@@ -77,7 +99,7 @@ class Home extends React.Component {
         {this.props.documents.filter(item => item.rejected).map(item => (
 
             <li key={item.link} className={s.newsItem}>
-              <b className={s.newsTitle}><a href={item.link}>{item.title}</a> {!item.signed ? '*' : ''}</b>
+              <b className={s.newsTitle}><a href={item.link}>{item.title}</a> </b>
             <button>Sign</button>
             <button>Reject</button>
               <blockquote>
