@@ -13,10 +13,7 @@ commontools==0.1.0
 cryptography==1.7.2
 defusedxml==0.5.0
 ecdsa==0.13
-enum34==1.1.6
-functools32==3.2.3.post2
 idna==2.2
-ipaddress==1.0.18
 jsonschema==2.6.0
 jsontokens==0.0.2
 keychain==0.1.4.1
