@@ -2,24 +2,22 @@ import React from 'react';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './index.css';
 
-class Document extends React.Component {
+export default class Document extends React.Component {
   constructor(props) {
-    console.log(props)
-    super(props)
+    super(props);
+    this.state = {date: new Date()};
   }
 
   render() {
     return (
-        <article key={this.props.link} className={s.newsThis.Props}>
-        <h4 className={s.newsTitle}><a href={this.props.link}>{this.props.title}</a> {!this.props.signed ? '*' : ''}</h4>
-        <blockquote>
-        {this.props.content}
-        </blockquote>
-        <button>Sign</button>
-        <button>Reject</button>
-        </article>
+            <li key={this.props.link} className={s.newsThis.Props}>
+              <b className={s.newsTitle}><a href={this.props.link}>{this.props.title}</a> </b>
+            <button>Sign</button>
+            <button>Reject</button>
+              <blockquote>
+              {this.props.content}
+              </blockquote>
+            </li>
     );
   }
 }
-
-export default withStyles(s)(Document);

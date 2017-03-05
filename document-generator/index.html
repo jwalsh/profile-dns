@@ -7,26 +7,40 @@
 
   </head>
   <body>
-    <h1>Loan Facilitator: Acme Inc.: Signing Request</h1>
-    <h2>User: Abigail</h2>
-    <div <i></i>d="app">
-      {{ message }}
-    </div>
     <form action="http://localhost:3001">
-      <h3>Signing Identity</h3>
+      <h3>DCU Signing Service: eyeauth.com</h3>
+
       <p>Your Blockstack Identity:</p>
-      <input type="text" name="signer_id" value="a.id">
-      <p>Co-signer Identity:</p>
-      <input type="text" name="cosigner_id" value="b.id">
-      <h3>Document</h3>
-      <p>You are being requested to sign the following document:</p>
+      <input type="text" name="signer_id" value="dcu-loan-facilitator.id">
+
+    </form>
+
+    <h3>Loans &gt; Closing &gt; Users &gt; Jason Walsh</h3>
+
+
+    <h1><i>Loan Facilitator</i>: DCU: Completed Signatures </h1>
+
+    <p></p>
+    <ul>
+      <li>DCU Closing Package 01-01-2017 - Promissory Note</li>
+      <li>Closing Package 01-01-2017 - No Material Change</li>
+      <li>Closing Package 01-01-2017 - No Asbestos</li>
+    </ul>
+    <h1><i>Loan Facilitator</i>: DCU: Signing Request</h1>
+    <h2>Borrower: <input type="text" value="jwalsh.id"/></h2>
+
+      <h3>Blanket Authorization Form 04-01-2017</h3>
+      <button>Request</button>
+      <h3>Closing Package 01-01-2017 - Closing Documents for Jason Walsh</h3>
+      <p>The following will close the loan application for Jason Walsh for $1000 USD from 01-01-2017</p>
+
+
+      <h4>Closing Package 01-01-2017 - Promissory Note</h4>
       <ul>
-        <li>Markdown</li>
-        <li>View Note</li>
         <li>Sign Promissory Note</li>
       </ul>
-      <textarea name="docx">
-        Simple Promissory Note
+      <pre name="docx">
+Promissory Note
 
 __________________   ___________________________      _______________
    City  			                 State  				   Date
@@ -41,15 +55,48 @@ ____________________________  By_________________________________
 (Lender)                              (Date)
 _________________________________
 (Witness)                             (Date)
+</pre>
+      <h4>Closing Package 01-01-2017 - No Material Change</h4>
+      <h4>Closing Package 01-01-2017 - No Asbestos</h4>
 
-      <h3>Callback</h3>
-      <pre>
-        sig_packets/:guid/?callback_token=some_limited_time_non_guessable_one_time_token
-      </pre>
-      <p>The following is the location of your signing authority:</p>
-      <input type="text" name="callback_url" value="https://localhost:3002/"/>
+      <button>Send Closing Package to Jason Walsh</button>
+      <h3>Email</h3>
+      <a href="mailto:jwalsh-user-email@example.com?subject:Your mortgage is ready to close. Visit http://identitysigning.com to sign your DCU mortgage closing documents.">Send closing package to Jason Walsh</a>
+
       <h3>Resolver</h3>
       <input type="submit"/>
-    </form>
+    <h3>Factual Attestation &gt; Employers &gt; ADP</h3>
+    <h2>Employer: <input type="text" value="adp-hr.id"/></h2>
+
+    <pre>
+Name of Applicant: ______________________________________________________
+
+Position (Job Title): ______________________________________________________
+
+Date of Hire: ______________________________________________________
+
+Pay Rate: Hourly*: __________ Monthly: _____________ Annually: _____________
+*If hourly, please include the number of hours worked on average per week: _____________
+
+Is There Be Any Anticipated Change in the Employee’s Salary in the Next 12 Months?____________
+
+Likelihood of Continued Employment (circle one): Strong Average Poor
+
+Additional Comments: ______________________________________________________________________________ ______________________________________________________________________________
+
+______________________________________
+Signature
+
+____________________________________
+Title
+
+______________________________________
+Phone Number
+
+____________________________________
+Date
+    </pre>
+    <h3>Factual Attestation &gt; Banks &gt; Deposits</h3>
+
   </body>
 </html>
