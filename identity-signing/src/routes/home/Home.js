@@ -49,6 +49,8 @@ class Home extends React.Component {
   acceptTerms(e) {
     console.log(e)
     this.setState({acceptedTerms: false})
+
+    fetch
   }
 
   handleClick() {
