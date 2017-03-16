@@ -1,9 +1,24 @@
-let Attestations = require('./azure-attestations');
+const Attestations = require('./azure-attestations');
 
-var attestations = new Attestations();
+let attestations = new Attestations();
+
+// If using the exported blockstack wallet you could use something like the following
+// let wallet = require('../blockstack-tools/wallet.json')
+// let privKey = wallet.data_privkey;
+// console.log(privKey)
+
+// export PRIVKEY='41d35b2f2145a350f93362ba7ccc45b88153375ebe2d5ebb0b8899ca89007aa97'
+
+let privKey = process.env.PRIVKEY
+
+if (!privKey) {
+  console.log('warning', 'no private key provided in PRIVKEY environment variable')
+}
 
 let id = 'jwalsh.id'
 
+const prefix = '*************************'
+console.log(prefix, 'Create')
 // CREATE
 attestations
   .create({
@@ -26,6 +41,7 @@ attestations.retrieve(id).then(response => {
   console.log('The record for this attestation: ', response);
 });
 
+console.log(prefix, 'Sign')
 // SIGN
 attestations
   .sign(
