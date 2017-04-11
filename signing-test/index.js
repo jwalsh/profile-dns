@@ -1,31 +1,33 @@
 const Attestations = require('./azure-attestations');
 
-let attestations = new Attestations();
-
 // If using the exported blockstack wallet you could use something like the following
-// let wallet = require('../blockstack-tools/wallet.json')
-// let privKey = wallet.data_privkey;
-// console.log(privKey)
+let wallet = require('../blockstack-tools/wallet.json')
+let privKey = process.env.PRIVKEY || wallet.data_privkey.toString()
+console.log(privKey)
 
 // export PRIVKEY='41d35b2f2145a350f93362ba7ccc45b88153375ebe2d5ebb0b8899ca89007aa97'
+// let privKey =
 
-let privKey = process.env.PRIVKEY
+let attestations = new Attestations({key: privKey});
+
 
 if (!privKey) {
   console.log('warning', 'no private key provided in PRIVKEY environment variable')
 }
 
-let id = 'jwalsh.id'
+let id = process.env.ID || 'jwalsh.id'
 
 const prefix = '*************************'
-console.log(prefix, 'Create')
+
+console.log(prefix, privKey)
+
 // CREATE
 attestations
   .create({
     signers: [
       'jwalsh.id',
       {
-        id: 'bar.id'
+        id: 'jwalsh.id'
       }
     ],
     chainpoint: true, // defaults to true
@@ -34,25 +36,30 @@ attestations
     }
   })
   .then(response => {
+    console.log(prefix, 'Create', response)
     id = response.id;
   })
 
-attestations.retrieve(id).then(response => {
-  console.log('The record for this attestation: ', response);
-});
+// RETREIVAL
+attestations
+  .retrieve(id)
+  .then(response => {
+    console.log(prefix, 'retrieve()')
+    console.log('The record for this attestation: ', response);
+  });
 
-console.log(prefix, 'Sign')
 // SIGN
 attestations
   .sign(
     {
       send: false,
-      key: '033927f487c1c648b7bbcdcf5f02b3c25128e3727ec66cf50954753c4f73c0a877',
+      key: privKey,
       data: {
         payload: 'Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.'
       }
     })
   .then(response => {
+    console.log(prefix, 'sign')
     console.log('Signature accepted', response);
   });
 

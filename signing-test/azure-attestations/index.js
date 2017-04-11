@@ -40,7 +40,10 @@ class Attestations {
         throw 'You provided no attestation data';
       }
       options.key = this.key;
-      console.log(options);
+      if (!options.key) {
+        throw 'You provided no private key';
+      }
+      // console.log(options);
       jsonRequest('POST', azureService + '/doc', options).then(response => {
         response.json().then(function(json){
           console.log(json);
