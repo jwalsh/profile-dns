@@ -104,6 +104,13 @@ class Home extends React.Component {
         <dd>20170401:100 Main St., Cambridge, 02139</dd>
         </dl>
 
+        <h1>Bundles for Jason Walsh</h1>
+
+        <ul>
+        <li>DCU: Final Signing: Loan 2016-12-30</li>
+        </ul>
+
+
         <h1>Documents for Jason Walsh</h1>
         <p>These are the legal documents needed for your mortgage. Please execute your signature where indicated below.</p>
 
