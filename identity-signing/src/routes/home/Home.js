@@ -90,6 +90,20 @@ class Home extends React.Component {
         {this.state.showPrivate ? <button onClick={this.hidePrivate}>hide</button> : <button onClick={this.showPrivate}>show</button>}
         <tt>{this.state.showPrivate ? this.state.private : '**********************************' }</tt>
         </div>
+
+        <h1>Attestations of Fact for Jason Walsh</h1>
+
+        <dl>
+        <dt>deposits:</dt>
+        <dd>20170401:1233</dd>
+        <dt>income</dt>
+        <dd>2016:1231233</dd>
+        <dt>employment</dt>
+        <dd>1/2016-12/2016:mit</dd>
+        <dt>address</dt>
+        <dd>20170401:100 Main St., Cambridge, 02139</dd>
+        </dl>
+
         <h1>Documents for Jason Walsh</h1>
         <p>These are the legal documents needed for your mortgage. Please execute your signature where indicated below.</p>
 
